@@ -1,3 +1,3 @@
 # Natours Application
 
-Built using mordern Tech stack: Node.js,Ecpress ,MongoDb, Mongoose 😁
+Built using modern Tech stack: Node.js,Express ,MongoDb, Mongoose 😁
