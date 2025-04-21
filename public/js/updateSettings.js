@@ -4,8 +4,8 @@ import { showAlert } from './alert';
 export const updateSettings = async (data, type = 'accountSetting') => {
     const url =
         type === 'password'
-            ? 'http://localhost:8080/api/v1/users/update-password'
-            : 'http://localhost:8080/api/v1/users/update-me';
+            ? '/api/v1/users/update-password'
+            : '/api/v1/users/update-me';
 
     const alertMsg =
         type === 'password'

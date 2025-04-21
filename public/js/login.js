@@ -4,7 +4,7 @@ import { showAlert } from './alert.js';
 export const login = async (email, password) => {
     try {
         const res = await axios.post(
-            'http://localhost:8080/api/v1/users/login',
+            '/api/v1/users/login',
             {
                 email,
                 password,

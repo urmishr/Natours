@@ -8,6 +8,7 @@ const helmet = require('helmet');
 const hpp = require('hpp');
 const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
@@ -34,7 +35,7 @@ app.use(
                 "'self'",
                 'https://unpkg.com',
                 ' https://cdnjs.cloudflare.com',
-                'http://localhost:8080/login',
+                '/login',
                 'https://js.stripe.com/',
             ],
             'connect-src': ["'self'", 'ws://localhost:1234/'],
@@ -57,6 +58,7 @@ app.use(
         limit: '10kb',
     }),
 );
+app.use(compression());
 
 app.use(cookieParser());
 
@@ -112,6 +114,6 @@ app.all('*', (req, res, next) => {
 
 //Global app error handler
 app.use(errorHandler.errorController);
-console.log('Current Env: ' + process.env.NODE_ENV);
+// console.log('Current Env: ' + process.env.NODE_ENV);
 
 module.exports = app;

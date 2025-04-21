@@ -45,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('email_account').value,
             );
             form.append('photo', document.getElementById('photo').files[0]);
-            console.log(form);
             updateSettings(form);
         });
     }

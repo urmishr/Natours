@@ -159,11 +159,6 @@ tourSchema.pre(/^find/, function (next) {
 
     next();
 });
-//print ms time
-// tourSchema.post(/^find/, function (docs, next) {
-//     console.log(`Query took ${Date.now() - this.start} Millisecond`);
-//     next();
-// });
 
 //aggregatino middlware
 tourSchema.pre('aggregate', function (next) {

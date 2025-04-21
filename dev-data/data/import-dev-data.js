@@ -15,7 +15,7 @@ const DB = process.env.DATABASE.replace(
 async function connectDB() {
     try {
         await mongoose.connect(DB);
-        console.log('Mongo DB Connected');
+        // console.log('Mongo DB Connected');
     } catch (error) {
         console.log(error.message);
     }
@@ -34,7 +34,6 @@ const addTours = async () => {
         await Tour.create(tours, { validateBeforeSave: false });
         await User.create(users, { validateBeforeSave: false });
         await Review.create(reviews, { validateBeforeSave: false });
-        console.log('Data successfully added to DB');
     } catch (error) {
         console.log(error.message);
     }
@@ -46,7 +45,6 @@ const deleteData = async () => {
         await Tour.deleteMany();
         await User.deleteMany();
         await Review.deleteMany();
-        console.log('Data successfully Deleted!');
     } catch (error) {
         console.log(error.message);
     }
