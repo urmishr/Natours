@@ -1,0 +1,30 @@
+@import 'tailwindcss';
+
+@layer base {
+    html,
+    body {
+        /* @apply bg-amber-700; */
+    }
+}
+
+@theme {
+    --color-natour: #55c57a;
+}
+
+@layer components {
+    .btn-primary {
+        border-radius: calc(infinity * 1px);
+        background-color: var(--color-natour);
+        padding-inline: --spacing(6);
+        padding-block: --spacing(3);
+        color: var(--color-white);
+        @apply transition-all;
+        &:hover {
+            @media (hover: hover) {
+                transform: translatey(-3px);
+                box-shadow: var(--shadow-xl);
+                cursor: pointer;
+            }
+        }
+    }
+}
