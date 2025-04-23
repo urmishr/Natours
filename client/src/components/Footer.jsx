@@ -1,8 +1,8 @@
 import logoGreenRound from './../assets/logos/logo-green-round.png';
 export default function Footer() {
   return (
-    <footer className='mx-5 my-10 lg:mt-15'>
-      <div className='flex flex-col items-center lg:flex-row lg:justify-between'>
+    <footer className='mt-4 border-t border-stone-400 bg-stone-500/10 lg:mt-8'>
+      <div className='mx-4 my-8 flex flex-col items-center lg:mx-15 lg:mt-7 lg:flex-row lg:justify-between'>
         <img
           src={logoGreenRound}
           alt='natours round logo'
