@@ -1,6 +1,12 @@
 import scenicImage from './../assets/tours/tour-1-cover.jpg';
-import { FaLocationArrow, FaMapPin, FaPeopleGroup } from 'react-icons/fa6';
-import { SlCalender } from 'react-icons/sl';
+import {
+  FaLocationArrow,
+  FaMapPin,
+  FaPeopleGroup,
+  FaCalendarDays,
+} from 'react-icons/fa6';
+import { MdOutlineCalendarMonth } from 'react-icons/md';
+import { NavLink } from 'react-router-dom';
 
 export default function Tour() {
   return (
@@ -39,7 +45,7 @@ export default function Tour() {
               <p className='text-stone-800/50'>Las Vegas, USA</p>
             </div>
             <div className='flex items-center gap-2'>
-              <SlCalender className='text-natours size-7' />
+              <MdOutlineCalendarMonth className='text-natours size-7' />
               <p className='text-stone-800/50'>August, 2025</p>
             </div>
             <div className='flex items-center gap-2'>
@@ -72,7 +78,9 @@ export default function Tour() {
             </p>
           </div>
           <div className='flex w-1/2 items-center justify-center'>
-            <button className='btn-primary px-8 py-3'>Details</button>
+            <NavLink to='/tour/test' className='btn-primary px-8 py-3'>
+              Details
+            </NavLink>
           </div>
         </div>
       </div>

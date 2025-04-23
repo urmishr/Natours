@@ -1,6 +1,11 @@
-import { useParams } from 'react-router-dom';
+import TourImageSection from '../components/TourImageSection';
+import TourInformation from '../components/TourInformation';
 
 export default function TourOverview() {
-    const params = useParams();
-    return <div>current tour overview: {params.id}</div>;
+  return (
+    <>
+      <TourImageSection />
+      <TourInformation />
+    </>
+  );
 }
