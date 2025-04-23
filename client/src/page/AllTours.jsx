@@ -1,7 +1,14 @@
+import Tour from '../components/Tour';
+
 export default function AllTours() {
-    return (
-        <div className='flex flex-col items-center justify-center space-y-5'>
-            <h1 className='text-natour mt-5 text-center text-2xl'>home page</h1>
-        </div>
-    );
+  return (
+    <div className='lg:grid lg:grid-cols-2 lg:items-center xl:grid-cols-3'>
+      <Tour />
+      <Tour />
+      <Tour />
+      <Tour />
+      <Tour />
+      <Tour />
+    </div>
+  );
 }
