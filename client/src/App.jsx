@@ -6,28 +6,26 @@ import AppLayout from './page/AppLayout';
 import Settings from './components/Settings';
 import Account from './page/Account';
 import MyBookings from './components/MyBookings';
-import AuthLayout from './page/AuthLayout';
+
 import TourOverview from './page/TourOverview';
 
 function App() {
-    return (
-        <BrowserRouter>
-            <Routes>
-                <Route path='/' element={<AppLayout />}>
-                    <Route index element={<AllTours />} />
-                    <Route path='tour/:id' element={<TourOverview />} />
-                    <Route element={<AuthLayout />}>
-                        <Route path='login' element={<Login />} />
-                        <Route path='signup' element={<Signup />} />
-                    </Route>
-                    <Route path='account' element={<Account />}>
-                        <Route index element={<Settings />} />
-                        <Route path='my-bookings' element={<MyBookings />} />
-                    </Route>
-                </Route>
-            </Routes>
-        </BrowserRouter>
-    );
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<AppLayout />}>
+          <Route index element={<AllTours />} />
+          <Route path='login' element={<Login />} />
+          <Route path='signup' element={<Signup />} />
+          <Route path='tour/:id' element={<TourOverview />} />
+          <Route path='account' element={<Account />}>
+            <Route index element={<Settings />} />
+            <Route path='my-bookings' element={<MyBookings />} />
+          </Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;

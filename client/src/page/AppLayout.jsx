@@ -1,10 +1,16 @@
 import { Outlet } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 export default function AppLayout() {
-    return (
-        <div>
-            <h1>Navbar will be here</h1>
-            <Outlet />
-        </div>
-    );
+  return (
+    <div className='flex min-h-screen flex-col'>
+      <Navbar />
+      {/* Content grows to fill available space */}
+      <main className='flex-grow'>
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
+  );
 }
