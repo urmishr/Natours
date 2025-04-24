@@ -6,7 +6,7 @@ export default function TourImageSection() {
   return (
     <section className='relative'>
       {/* tour image */}
-      <div className='img-clip relative z-2 md:h-[380px] lg:h-[470px]'>
+      <div className='relative z-2 md:h-[380px] lg:h-[470px]'>
         <div className='bg-natours/40 absolute h-full w-full'></div>
         <img
           src={scenicImage}

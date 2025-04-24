@@ -4,36 +4,24 @@ import tourThree from './../assets/tours/tour-1-3.jpg';
 
 export default function TourImages() {
   return (
-    <section className='mb-10 flex flex-col lg:min-h-[400px] lg:flex-row'>
-      <div className='flex -skew-y-5 flex-col lg:-translate-y-45 lg:flex-row lg:py-20'>
+    <section className='flex flex-col lg:my-10 lg:flex-row'>
+      <div className='flex flex-col lg:flex-row'>
         <img
           src={tourOne}
           alt='tour Image 1'
-          className='object-cover lg:w-1/3'
+          className='mx-6 my-5 rounded object-cover shadow-xl md:mx-12 md:my-10 lg:w-1/3 lg:transition-all lg:hover:scale-110'
         />
         <img
           src={tourTwo}
           alt='tour Image 2'
-          className='object-cover lg:w-1/3'
+          className='mx-6 my-5 rounded object-cover shadow-xl md:mx-12 md:my-10 lg:w-1/3 lg:transition-all lg:hover:scale-110'
         />
         <img
           src={tourThree}
           alt='tour Image 3'
-          className='object-cover lg:w-1/3'
+          className='mx-6 my-5 rounded object-cover shadow-xl md:mx-12 md:my-10 lg:w-1/3 lg:transition-all lg:hover:scale-110'
         />
       </div>
     </section>
   );
-}
-
-{
-  /* <section className='imgclip flex -translate-y-33 flex-col lg:min-h-[400px] lg:flex-row'>
-<img src={tourOne} alt='tour Image 1' className='object-cover lg:w-1/3' />
-<img src={tourTwo} alt='tour Image 2' className='object-cover lg:w-1/3' />
-<img
-  src={tourThree}
-  alt='tour Image 3'
-  className='object-cover lg:w-1/3'
-/>
-</section> */
 }
