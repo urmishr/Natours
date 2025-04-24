@@ -88,4 +88,19 @@
     );
     background-image: linear-gradient(to right, #7dd56f, #28b487);
   }
+
+  .imgclip {
+    clip-path: polygon(0 17%, 100% 0%, 100% 83%, 0% 100%);
+    object-fit: cover;
+  }
+
+  .sectionclip {
+    clip-path: polygon(0 var(9vh), 100% 0, 100% calc(100% - var(9vh)), 0 100%);
+    -webkit-clip-path: polygon(
+      0 var(9vh),
+      100% 0,
+      100% calc(100% - var(9vh)),
+      0 100%
+    );
+  }
 }

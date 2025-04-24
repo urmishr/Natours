@@ -1,10 +1,5 @@
 import scenicImage from './../assets/tours/tour-1-cover.jpg';
-import {
-  FaLocationArrow,
-  FaMapPin,
-  FaPeopleGroup,
-  FaCalendarDays,
-} from 'react-icons/fa6';
+import { FaLocationArrow, FaMapPin, FaPeopleGroup } from 'react-icons/fa6';
 import { MdOutlineCalendarMonth } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 
@@ -16,7 +11,7 @@ export default function Tour() {
       <div className='mx-6 max-w-[388px] overflow-clip rounded bg-white shadow-lg'>
         <div className='relative'>
           <div className='img-clip'>
-            <div className='bg-natours/60 absolute h-full w-full'></div>
+            <div className='bg-natours/40 absolute h-full w-full'></div>
             <img src={scenicImage} alt='scenic image' className='' />
           </div>
           <h3 className='absolute right-5 bottom-6'>

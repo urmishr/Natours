@@ -1,7 +1,7 @@
 export default function TourDesciption() {
   return (
-    <div className='flex -skew-y-5 flex-col bg-stone-300/10 px-10 py-20 lg:w-1/2 lg:px-20 lg:pt-25'>
-      <div className='flex skew-y-5 flex-col justify-center space-y-4'>
+    <div className='flex flex-col bg-stone-300/10 p-10 lg:w-1/2 lg:p-30'>
+      <div className='flex flex-col justify-center space-y-4'>
         <h1 className='natours-gradient-text font-italic text-center text-2xl font-bold lg:text-3xl'>
           Discover Your next adventure
         </h1>
