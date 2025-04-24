@@ -44,7 +44,7 @@ export default function Navbar() {
               onClick={() => setIsOpen(!isOpen)}
             />
           )}
-          <div className='hidden gap-2 md:block md:flex'>
+          <div className='hidden gap-2 md:flex'>
             <Navlinks setIsOpen={setIsOpen} />
             {user && (
               <NavLink

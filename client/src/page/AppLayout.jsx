@@ -7,7 +7,7 @@ export default function AppLayout() {
     <div className='flex min-h-screen flex-col'>
       <Navbar />
       {/* Content grows to fill available space */}
-      <main className='flex-grow'>
+      <main>
         <Outlet />
       </main>
       <Footer />
