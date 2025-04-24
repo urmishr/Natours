@@ -9,17 +9,17 @@ export default function TourImages() {
         <img
           src={tourOne}
           alt='tour Image 1'
-          className='mx-6 my-5 rounded object-cover shadow-xl md:mx-12 md:my-10 lg:w-1/3 lg:transition-all lg:hover:scale-110'
+          className='mx-6 my-5 rounded object-cover shadow-xl md:mx-12 md:my-10 lg:mx-6 lg:my-8 lg:w-1/3 lg:transition-all lg:hover:scale-110'
         />
         <img
           src={tourTwo}
           alt='tour Image 2'
-          className='mx-6 my-5 rounded object-cover shadow-xl md:mx-12 md:my-10 lg:w-1/3 lg:transition-all lg:hover:scale-110'
+          className='mx-6 my-5 rounded object-cover shadow-xl md:mx-12 md:my-10 lg:mx-6 lg:my-8 lg:w-1/3 lg:transition-all lg:hover:scale-110'
         />
         <img
           src={tourThree}
           alt='tour Image 3'
-          className='mx-6 my-5 rounded object-cover shadow-xl md:mx-12 md:my-10 lg:w-1/3 lg:transition-all lg:hover:scale-110'
+          className='mx-6 my-5 rounded object-cover shadow-xl md:mx-12 md:my-10 lg:mx-6 lg:my-8 lg:w-1/3 lg:transition-all lg:hover:scale-110'
         />
       </div>
     </section>
