@@ -34,7 +34,7 @@ export default function Signup() {
           </label>
           <input
             type='text'
-            className='input-natours w-full'
+            className='input-natours w-full text-stone-600'
             placeholder='you@example.com'
           />
         </div>
@@ -44,7 +44,7 @@ export default function Signup() {
           </label>
           <input
             type='password'
-            className='input-natours w-full'
+            className='input-natours w-full text-stone-600'
             placeholder='••••••••'
           />
         </div>
@@ -57,8 +57,8 @@ export default function Signup() {
           </label>
           <input
             type='password'
-            className='input-natours w-full'
-            placeholder='••••••••'
+            className='input-natours w-full text-stone-600'
+            placeholder='•••••••• '
           />
         </div>
         <div className='flex flex-col space-y-3'>

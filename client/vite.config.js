@@ -8,5 +8,12 @@ export default defineConfig({
   server: {
     host: true, // Allows access from the network
     port: 3000, // You can specify any port you want
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
   },
 });
