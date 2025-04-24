@@ -1,9 +1,26 @@
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/authContext';
+import Loader from './Loader';
 
 export default function Login() {
+  const { loading, login, isAuthenticated } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  function handleLogin() {
+    login(email, password);
+    console.log('loading', loading);
+    console.log('isAuthenticated', isAuthenticated);
+    console.log('loading', loading);
+    // if (isAuthenticated) navigate('/tours');
+  }
+
+  useEffect(() => {
+    if (isAuthenticated && !loading) {
+      navigate('/tours');
+    }
+  }, [isAuthenticated, loading, navigate]);
   return (
     <section className='my-auto flex w-full flex-col md:items-center'>
       <div className='mx-5 my-14 flex flex-col justify-between space-y-8 rounded-lg bg-white px-5 py-7 shadow-lg md:min-w-[600px] md:p-13 md:shadow-xl'>
@@ -43,7 +60,13 @@ export default function Login() {
           />
         </div>
         <div>
-          <button className='btn-primary w-1/2 py-3 md:w-1/3'>Login</button>
+          <button
+            className='btn-primary w-1/2 py-3 md:w-1/3'
+            onClick={handleLogin}
+            disabled={isAuthenticated}
+          >
+            {loading ? <Loader /> : 'Login'}
+          </button>
         </div>
       </div>
     </section>

@@ -10,6 +10,8 @@ import MyBookings from './components/MyBookings';
 import TourOverview from './page/TourOverview';
 import AllTours from './page/AllTours';
 import { AuthProvier } from './context/authContext';
+import PageNotFound from './page/PageNotFound';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -22,10 +24,32 @@ function App() {
             <Route path='signup' element={<Signup />} />
             <Route path='tours' element={<AllTours />} />
             <Route path='tour/:id' element={<TourOverview />} />
-            <Route path='account' element={<Account />}>
-              <Route index element={<Settings />} />
-              <Route path='my-bookings' element={<MyBookings />} />
+            <Route
+              path='account'
+              element={
+                <ProtectedRoute>
+                  <Account />
+                </ProtectedRoute>
+              }
+            >
+              <Route
+                index
+                element={
+                  <ProtectedRoute>
+                    <Settings />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='my-bookings'
+                element={
+                  <ProtectedRoute>
+                    <MyBookings />
+                  </ProtectedRoute>
+                }
+              />
             </Route>
+            <Route path='*' element={<PageNotFound />} />
           </Route>
         </Routes>
       </BrowserRouter>
