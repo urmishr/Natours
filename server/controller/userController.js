@@ -70,9 +70,11 @@ exports.getAllUsers = factoryController.getAll(User);
 
 exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
     if (!req.file) return next();
-    const fileName = `user-${req.user.id}-${Date.now()}.jpeg`;
+
+    const fileName = `user-${req.user?.id ? req.user.id : 'new'}-${Date.now()}.jpeg`;
     req.file.filename = fileName;
     await sharp(req.file.buffer)
+        .rotate()
         .resize(500, 500, { fit: 'cover' })
         .toFormat('jpeg')
         .jpeg({ quality: 90 })
@@ -82,18 +84,6 @@ exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
 
 //if you want to save the image to the disk
 const storage = multer.memoryStorage();
-
-//if you want to save the image to the disk
-// const storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//         cb(null, 'public/img/users');
-//     },
-//     filename: function (req, file, cb) {
-//         const fileName = `user-${req.user.id}-${Date.now()}.${file.mimetype.split('/')[1]}`;
-
-//         cb(null, fileName);
-//     },
-// });
 
 const multerFilter = (req, file, cb) => {
     if (file.mimetype.startsWith('image')) {

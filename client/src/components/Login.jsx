@@ -2,18 +2,48 @@ import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
 import Loader from './Loader';
-
+import toast from 'react-hot-toast';
+import validator from 'validator';
 export default function Login() {
   const { loading, login, isAuthenticated } = useAuth();
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  function handleLogin() {
-    login(email, password);
-    console.log('loading', loading);
-    console.log('isAuthenticated', isAuthenticated);
-    console.log('loading', loading);
-    // if (isAuthenticated) navigate('/tours');
+
+  function validateFields(email, password) {
+    let valid = true;
+
+    if (!email) {
+      setEmailError(true);
+      valid = false;
+    } else if (!validator.isEmail(email)) {
+      setEmailError(true);
+      toast.error('Incorrect email address format!');
+      valid = false;
+    }
+
+    if (!password) {
+      setPasswordError(true);
+      valid = false;
+    } else if (password.length < 8) {
+      setPasswordError(true);
+      toast.error('Password length must be at least 8 characters');
+      valid = false;
+    }
+
+    if (!valid && (!email || !password)) {
+      toast.error('Please provide both email and password!');
+    }
+
+    return valid;
+  }
+
+  async function handleLogin() {
+    if (validateFields(email, password)) {
+      await login(email, password);
+    }
   }
 
   useEffect(() => {
@@ -36,34 +66,44 @@ export default function Login() {
           </NavLink>
         </div>
         <div className='flex flex-col space-y-3'>
-          <label htmlFor='email' className='font-semibold text-stone-600'>
-            Email Address
-          </label>
+          <div>
+            <label htmlFor='email' className='font-semibold text-stone-600'>
+              Email Address
+            </label>
+          </div>
           <input
             type='text'
-            className='input-natours w-full text-stone-600'
+            className={`input-natours w-full text-stone-600 ${emailError ? 'border-3 border-red-400 focus:ring-0' : ''}`}
             placeholder='you@example.com'
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setEmailError(false);
+            }}
           />
         </div>
         <div className='flex flex-col space-y-3'>
-          <label htmlFor='password' className='font-semibold text-stone-600'>
-            Password
-          </label>
+          <div>
+            <label htmlFor='password' className='font-semibold text-stone-600'>
+              Password
+            </label>
+          </div>
           <input
             type='password'
-            className='input-natours w-full text-stone-600'
+            className={`input-natours w-full text-stone-600 ${passwordError && 'border-3 border-red-400 focus:ring-0'}`}
             placeholder='••••••••'
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setPasswordError(false);
+            }}
           />
         </div>
         <div>
           <button
             className='btn-primary w-1/2 py-3 md:w-1/3'
             onClick={handleLogin}
-            disabled={isAuthenticated}
+            disabled={loading}
           >
             {loading ? <Loader /> : 'Login'}
           </button>

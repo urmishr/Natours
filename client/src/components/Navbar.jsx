@@ -9,6 +9,12 @@ import Navlinks from './Navlinks';
 
 export default function Navbar() {
   const { user } = useAuth();
+
+  // replace with your backend URL or env var
+
+  const userPhoto =
+    user && user.photo ? `/img/users/${user.photo}` : `/img/users/default.jpg`;
+
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -83,7 +89,7 @@ export default function Navbar() {
                   setIsOpen(false);
                 }}
               >
-                <img src={userDefault} className='size-12 rounded-full' />
+                <img src={userPhoto} className='size-12 rounded-full' />
                 <span className='text-2xl'>{capitalize(user.name)}</span>
               </NavLink>
             )}

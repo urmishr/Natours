@@ -57,7 +57,13 @@ exports.getOne = (Model, popOption) => {
 
         res.status(200).json({
             status: 'Success',
-            data: { doc },
+            data: {
+                id: doc._id,
+                name: doc.name,
+                email: doc.email,
+                photo: doc.photo,
+                role: doc.role,
+            },
         });
     });
 };

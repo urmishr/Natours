@@ -45,6 +45,8 @@ const createSendToken = (res, user, statusCode, message = null) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
+    if (req.file) req.body.photo = req.file.filename;
+
     const newUser = await User.create(req.body);
     const url = `${req.protocol}://${req.get('host')}/me`;
     await new Email(newUser, url).sendWelcome();
@@ -151,7 +153,7 @@ exports.logout = (req, res) => {
 
     res.status(200).json({
         status: 'success',
-        message: 'You are looged out',
+        message: 'You are logged out',
     });
 };
 
