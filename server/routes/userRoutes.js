@@ -3,7 +3,12 @@ const userController = require('./../controller/userController');
 const authController = require('./../controller/authController');
 const route = express.Router();
 
-route.post('/signup', authController.signup);
+route.post(
+    '/signup',
+    userController.uploadUserPhoto,
+    userController.resizeUserPhoto,
+    authController.signup,
+);
 route.post('/login', authController.login);
 route.get('/logout', authController.logout);
 route.post('/forgot-password', authController.forgotPassword);

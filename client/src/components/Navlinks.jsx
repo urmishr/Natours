@@ -10,6 +10,7 @@ export default function Navlinks({ setIsOpen }) {
   function handleLogout() {
     console.log('clicked');
     logout();
+    setIsOpen(false);
     navigate('/');
   }
 

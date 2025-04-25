@@ -1,8 +1,9 @@
-import { createContext, useContext, useReducer } from 'react';
+import { createContext, useContext, useEffect, useReducer } from 'react';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 const authContext = createContext();
 const initialState = {
-  user: null,
+  currentUser: null,
   error: '',
   loading: false,
   isAuthenticated: false,
@@ -13,8 +14,8 @@ function reducer(state, action) {
     case 'login':
       return {
         ...state,
-        user: action.payload,
         isAuthenticated: true,
+        currentUser: action.payload,
         loading: false,
       };
 
@@ -24,7 +25,7 @@ function reducer(state, action) {
       return { ...state, loading: action.payload };
 
     case 'logout':
-      return { ...state, user: null, error: '', isAuthenticated: false };
+      return { ...state, currentUser: null, error: '', isAuthenticated: false };
 
     default: {
       return new Error(`Error at ${action.type}`);
@@ -32,10 +33,15 @@ function reducer(state, action) {
   }
 }
 function AuthProvier({ children }) {
-  const [{ user, error, loading, isAuthenticated }, dispatch] = useReducer(
-    reducer,
-    initialState,
-  );
+  const [{ currentUser, error, loading, isAuthenticated }, dispatch] =
+    useReducer(reducer, initialState);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('currentUser');
+    if (storedUser) {
+      dispatch({ type: 'login', payload: JSON.parse(storedUser) });
+    }
+  }, []);
 
   async function login(email, password) {
     try {
@@ -44,12 +50,49 @@ function AuthProvier({ children }) {
         method: 'POST',
         url: '/api/v1/users/login',
         data: { email, password },
+        withCredentials: true,
+      });
+      console.log(res.data.user);
+      await loadUser();
+    } catch (e) {
+      console.error(e.response.data);
+      toast.error(e.response.data.message);
+      dispatch({ type: 'error', payload: e });
+      dispatch({ type: 'logout' });
+    } finally {
+      dispatch({ type: 'loading', payload: false });
+    }
+  }
+
+  async function loadUser() {
+    try {
+      const res = await axios('/api/v1/users/me', { withCredentials: true });
+
+      console.log(res);
+      dispatch({ type: 'login', payload: res.data.data });
+      localStorage.setItem('currentUser', JSON.stringify(res.data.data));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function signup(formdata) {
+    try {
+      dispatch({ type: 'loading', payload: true });
+      const res = await axios.post('/api/v1/users/signup', formdata, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        withCredentials: true,
       });
       console.log(res.data);
-      dispatch({ type: 'login', payload: res.data.data.user });
+
+      toast.success('Signup successful!');
+      loadUser();
     } catch (e) {
-      console.error(e);
-      dispatch({ type: 'error', payload: e });
+      console.error(e.response.data);
+      toast.error(e.response.data.message);
+      dispatch({ type: 'error', payload: e.message });
     } finally {
       dispatch({ type: 'loading', payload: false });
     }
@@ -59,7 +102,9 @@ function AuthProvier({ children }) {
     try {
       const res = await axios('/api/v1/users/logout');
       console.log(res);
+
       dispatch({ type: 'logout' });
+      localStorage.removeItem('currentUser');
     } catch (error) {
       console.log(error);
       dispatch({ type: 'error', payload: error.response });
@@ -68,7 +113,15 @@ function AuthProvier({ children }) {
 
   return (
     <authContext.Provider
-      value={{ login, error, loading, user, logout, isAuthenticated }}
+      value={{
+        login,
+        signup,
+        error,
+        loading,
+        user: currentUser,
+        logout,
+        isAuthenticated,
+      }}
     >
       {children}
     </authContext.Provider>
