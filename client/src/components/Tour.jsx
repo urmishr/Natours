@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 export default function Tour() {
   return (
-    <section className='my-10 flex items-center justify-center'>
+    <section className='my-10 flex w-full items-center justify-center'>
       {/* image section */}
 
       <div className='mx-6 max-w-[388px] overflow-clip rounded bg-white shadow-lg'>

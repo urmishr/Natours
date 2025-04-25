@@ -8,7 +8,7 @@ export default function AppLayout() {
       <Navbar />
       <Toaster />
       {/* Content grows to fill available space */}
-      <main className='flex-grow'>
+      <main className='min-h-[calc(100vh-100px)]'>
         <Outlet />
       </main>
       <Footer />

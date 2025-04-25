@@ -25,9 +25,10 @@
       to(#28b487)
     );
     background-image: linear-gradient(to right, #7dd56f, #28b487);
-    background-color: var(--color-natours);
+
     color: var(--color-white);
-    @apply text-xl font-semibold transition-all;
+
+    @apply disabled:bg-natours/50 text-xl font-semibold transition-all;
     &:hover {
       @media (hover: hover) {
         transform: translatey(-3px);
