@@ -3,13 +3,14 @@ import { useAuth } from '../context/authContext';
 import { MdOutlineTravelExplore } from 'react-icons/md';
 import { IoLogIn, IoLogOut } from 'react-icons/io5';
 import { FaUserPlus } from 'react-icons/fa';
+import Loader from './Loader';
 
 export default function Navlinks({ setIsOpen }) {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, loading } = useAuth();
   const navigate = useNavigate();
-  function handleLogout() {
+  async function handleLogout() {
     console.log('clicked');
-    logout();
+    await logout();
     setIsOpen(false);
     navigate('/');
   }
@@ -70,6 +71,11 @@ export default function Navlinks({ setIsOpen }) {
           >
             {<IoLogOut className='text-natours size-8' />}
             <span>Logout</span>
+            {loading && (
+              <span>
+                <Loader />
+              </span>
+            )}
           </button>
         </div>
       )}

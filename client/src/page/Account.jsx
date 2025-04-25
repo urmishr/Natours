@@ -1,11 +1,30 @@
-import { Outlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 // import Login from '../components/Login';
 
 export default function Account() {
-    return (
-        <div>
-            <h1>sidebar willl be here</h1>
-            <Outlet />
-        </div>
-    );
+  return (
+    <section className='flex flex-col items-center justify-center px-5 py-8'>
+      <div className='my-5 space-x-5 rounded bg-white p-6 shadow-md'>
+        <NavLink
+          to='/account'
+          end
+          className={({ isActive }) =>
+            `text-natours p-3 text-lg font-semibold ${isActive && 'bg-natours rounded px-3 py-3 text-white shadow-md'} `
+          }
+        >
+          Accoount Settings
+        </NavLink>
+        <NavLink
+          to='my-bookings'
+          end
+          className={({ isActive }) =>
+            `text-natours p-3 text-lg font-semibold ${isActive && 'bg-natours rounded px-3 py-3 text-white shadow-md'} `
+          }
+        >
+          My Bookings
+        </NavLink>
+      </div>
+      <Outlet />
+    </section>
+  );
 }

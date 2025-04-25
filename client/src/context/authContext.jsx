@@ -40,6 +40,8 @@ function AuthProvier({ children }) {
     const storedUser = localStorage.getItem('currentUser');
     if (storedUser) {
       dispatch({ type: 'login', payload: JSON.parse(storedUser) });
+    } else {
+      dispatch({ type: 'logout' });
     }
   }, []);
 
@@ -72,7 +74,7 @@ function AuthProvier({ children }) {
       dispatch({ type: 'login', payload: res.data.data });
       localStorage.setItem('currentUser', JSON.stringify(res.data.data));
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data.message);
     }
   }
 
@@ -88,7 +90,7 @@ function AuthProvier({ children }) {
       console.log(res.data);
 
       toast.success('Signup successful!');
-      loadUser();
+      await loadUser();
     } catch (e) {
       console.error(e.response.data);
       toast.error(e.response.data.message);
@@ -100,6 +102,7 @@ function AuthProvier({ children }) {
 
   async function logout() {
     try {
+      dispatch({ type: 'loading', payload: true });
       const res = await axios('/api/v1/users/logout');
       console.log(res);
 
@@ -108,6 +111,50 @@ function AuthProvier({ children }) {
     } catch (error) {
       console.log(error);
       dispatch({ type: 'error', payload: error.response });
+    } finally {
+      dispatch({ type: 'loading', payload: false });
+    }
+  }
+
+  async function changePassword(currentPassword, newPassword, confirmPassword) {
+    try {
+      dispatch({ type: 'loading', payload: true });
+      await axios({
+        method: 'PATCH',
+        url: '/api/v1/users/update-password',
+        data: { currentPassword, newPassword, confirmPassword },
+      });
+      toast.success('Password Changed Successfully!');
+      await logout();
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response.data.message);
+    } finally {
+      dispatch({ type: 'loading', payload: false });
+    }
+  }
+
+  async function changeProfile(formData) {
+    try {
+      dispatch({ type: 'loading', payload: true });
+      const res = await axios({
+        method: 'PATCH',
+        url: '/api/v1/users/update-me',
+        data: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        withCredentials: true,
+      });
+      console.log(res.data);
+      toast.success('Profile updated successfully!');
+      await loadUser();
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response?.data?.message || 'Failed to update profile');
+      dispatch({ type: 'error', payload: error.message });
+    } finally {
+      dispatch({ type: 'loading', payload: false });
     }
   }
 
@@ -116,6 +163,8 @@ function AuthProvier({ children }) {
       value={{
         login,
         signup,
+        changePassword,
+        changeProfile,
         error,
         loading,
         user: currentUser,

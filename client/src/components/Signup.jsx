@@ -22,7 +22,7 @@ export default function Signup() {
   const [passwordError, setPasswordError] = useState(false);
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
 
-  function validateFields(fullname, email, password, confirmPassword) {
+  function validateFields(fullName, email, password, confirmPassword) {
     let valid = true;
 
     // Full Name: required, at least 2 words
@@ -213,7 +213,7 @@ export default function Signup() {
             )}
             <label
               htmlFor='photo-upload'
-              className='hover:border-natours relative size-20 cursor-pointer rounded-full border-3 border-stone-300 bg-stone-100 p-1 transition-colors lg:size-26'
+              className='hover:border-natours relative size-20 cursor-pointer rounded-full border-3 border-stone-300 bg-stone-100 p-1 transition-colors md:size-24 lg:size-26'
             >
               {preview ? (
                 <img
@@ -222,8 +222,8 @@ export default function Signup() {
                   className='h-full w-full rounded-full object-cover'
                 />
               ) : (
-                <div className='flex h-full w-full items-center justify-center text-stone-400'>
-                  <span className='text-center text-sm select-none'>
+                <div className='flex h-full w-full items-center justify-center'>
+                  <span className='text-center text-sm text-stone-600 select-none'>
                     Choose Photo
                   </span>
                 </div>

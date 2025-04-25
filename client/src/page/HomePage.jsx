@@ -4,12 +4,12 @@ import scenicImage from './../assets/tours/tour-1-cover.jpg';
 export default function HomePage() {
   return (
     <section className='flex flex-col items-center justify-center space-y-7 lg:space-y-12'>
-      <div className='mt-5 lg:mt-10'>
-        <h1 className='natours-gradient-text font-italic p-3 text-center text-3xl font-bold lg:text-5xl'>
+      <div className='my-5 lg:mt-10'>
+        <h1 className='natours-gradient-text font-italic my-5 text-center text-3xl font-bold lg:text-4xl'>
           Discover Your next adventure
         </h1>
       </div>
-      <div className='relative mx-4 mt-2 lg:w-3/4'>
+      <div className='relative mx-4 mt-2 overflow-hidden rounded md:w-3/4'>
         <div className='img-clip lg:rounded'>
           <div className='bg-natours/40 absolute h-full w-full'></div>
           <img src={scenicImage} alt='scenic image' className='lg:shadow' />

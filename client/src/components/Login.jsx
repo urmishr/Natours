@@ -41,8 +41,8 @@ export default function Login() {
   }
 
   async function handleLogin() {
-    if (validateFields(email, password)) {
-      await login(email, password);
+    if (validateFields(email.trim(), password.trim())) {
+      await login(email.trim(), password.trim());
     }
   }
 

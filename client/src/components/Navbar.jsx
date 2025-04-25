@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FaRegWindowClose } from 'react-icons/fa';
 import { LuMenu } from 'react-icons/lu';
 import logoGreen from '../assets/logos/logo-green.png';
-import userDefault from '../assets/users/default.jpg';
+
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
 import Navlinks from './Navlinks';
@@ -62,7 +62,7 @@ export default function Navbar() {
                   setIsOpen(false);
                 }}
               >
-                <img src={userDefault} className='size-8 rounded-full' />
+                <img src={userPhoto} className='size-8 rounded-full' />
                 <span className='text-xl'>{capitalize(user.name)}</span>
               </NavLink>
             )}
@@ -78,7 +78,7 @@ export default function Navbar() {
               <Navlinks setIsOpen={setIsOpen} />
             </ul>
           </div>
-          <div className='flex w-2/3 items-center justify-center p-5'>
+          <div className='flex w-2/3 items-end justify-center p-5'>
             {user && (
               <NavLink
                 to='/account'
@@ -90,7 +90,7 @@ export default function Navbar() {
                 }}
               >
                 <img src={userPhoto} className='size-12 rounded-full' />
-                <span className='text-2xl'>{capitalize(user.name)}</span>
+                <span className='text-xl'>{capitalize(user.name)}</span>
               </NavLink>
             )}
           </div>
