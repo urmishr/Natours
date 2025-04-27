@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import validator from 'validator';
-import { useAuth } from '../context/authContext';
+import { useAuth } from '../context/AuthProvider';
 import Loader from './Loader';
 
 export default function Signup() {

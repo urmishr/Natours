@@ -4,7 +4,7 @@ import { LuMenu } from 'react-icons/lu';
 import logoGreen from '../assets/logos/logo-green.png';
 
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/authContext';
+import { useAuth } from '../context/AuthProvider';
 import Navlinks from './Navlinks';
 
 export default function Navbar() {
@@ -19,12 +19,12 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   function capitalize(name) {
-    const nameCapitalize = name.split(' ').map((name) => {
+    const nameCapitalize = name?.split(' ').map((name) => {
       name = name.toLowerCase();
       return name.charAt(0).toUpperCase() + name.slice(1);
     });
 
-    return nameCapitalize.join(' ');
+    return nameCapitalize?.join(' ');
   }
   return (
     <header className='w-full'>

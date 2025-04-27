@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useAuth } from '../context/authContext';
+import { useAuth } from '../context/AuthProvider';
 import validator from 'validator';
 import Loader from './Loader';
 
@@ -37,7 +37,7 @@ export default function ProfileSettings() {
       valid = false;
     }
 
-    if (!fullName.trim() || fullName.trim().split(' ').length < 2) {
+    if (!fullName.trim()) {
       setFullNameError(true);
       toast.error('Please enter your full name .');
       valid = false;

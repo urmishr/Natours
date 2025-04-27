@@ -1,22 +1,31 @@
-import scenicImage from './../assets/tours/tour-1-cover.jpg';
 import { FaLocationArrow, FaMapPin, FaPeopleGroup } from 'react-icons/fa6';
 import { MdOutlineCalendarMonth } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 
-export default function Tour() {
+export default function Tour({ tour }) {
+  function capitalize(str) {
+    if (!str) return '';
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
   return (
-    <section className='my-10 flex w-full items-center justify-center'>
+    <section className='my-7 flex w-full items-center justify-center'>
       {/* image section */}
 
-      <div className='mx-6 max-w-[388px] overflow-clip rounded bg-white shadow-lg'>
+      <div className='max-w-[388px] overflow-clip rounded bg-white shadow-lg'>
         <div className='relative'>
           <div className='img-clip'>
             <div className='bg-natours/40 absolute h-full w-full'></div>
-            <img src={scenicImage} alt='scenic image' className='' />
+            <img
+              src={`/img/tours/${tour.imageCover}`}
+              // src={scenicImage}
+              alt='scenic image'
+              className='min-h-[250px] min-w-[388px]'
+            />
           </div>
           <h3 className='absolute right-5 bottom-6'>
             <span className='natours-gradient-t px-3 py-2 text-2xl font-light text-white shadow-md lg:text-2xl'>
-              The Snow Adventurer
+              {tour.name}
             </span>
           </h3>
         </div>
@@ -27,29 +36,34 @@ export default function Tour() {
           {/* difficulty & description */}
           <div className='space-y-4'>
             <p className='font-semibold text-stone-600'>
-              Medium - 10 Days Tour
+              {capitalize(tour.difficulty)} - {tour.duration} Days Tour
             </p>
-            <p className='font text-stone-800/50 italic'>
-              Breathing in Nature in America's most spectacular National Parks
-            </p>
+            <p className='font text-stone-800/50 italic'>{tour.summary}</p>
           </div>
           {/* location / date stops / num-people */}
           <div className='mt-10 grid grid-cols-2 gap-7'>
             <div className='flex items-center gap-2'>
               <FaLocationArrow className='text-natours size-7' />
-              <p className='text-stone-800/50'>Las Vegas, USA</p>
+              <p className='text-stone-800/50'>
+                {tour.startLocation.description}
+              </p>
             </div>
             <div className='flex items-center gap-2'>
               <MdOutlineCalendarMonth className='text-natours size-7' />
-              <p className='text-stone-800/50'>August, 2025</p>
+              <p className='text-stone-800/50'>
+                {new Date(tour.startDates[0]).toLocaleString('en-US', {
+                  month: 'short',
+                  year: 'numeric',
+                })}
+              </p>
             </div>
             <div className='flex items-center gap-2'>
               <FaMapPin className='text-natours size-7' />
-              <p className='text-stone-800/50'>4 Stops</p>
+              <p className='text-stone-800/50'>{tour.locations.length} Stops</p>
             </div>
             <div className='flex items-center gap-2'>
               <FaPeopleGroup className='text-natours size-7' />
-              <p className='text-stone-800/50'>15 People</p>
+              <p className='text-stone-800/50'>{tour.maxGroupSize} People</p>
             </div>
           </div>
         </div>
@@ -60,20 +74,24 @@ export default function Tour() {
           {/* pricings */}
           <div className='w-1/2 justify-baseline'>
             <p className='text-lg font-bold text-stone-600'>
-              $1499{' '}
+              ${tour.price}
               <span className='ml-1 text-sm font-medium text-stone-800/50'>
                 Per person
               </span>
             </p>
             <p className='text-lg font-bold text-stone-600'>
-              4.7
+              {tour.ratingsAverage}
               <span className='ml-1 text-sm font-medium text-stone-800/50'>
                 Ratings
               </span>
             </p>
           </div>
           <div className='flex w-1/2 items-center justify-center'>
-            <NavLink to='/tour/test' className='btn-primary px-8 py-3'>
+            <NavLink
+              to={`/tour/${tour.slug}`}
+              className='btn-primary px-8 py-3'
+              state={{ tour }}
+            >
               Details
             </NavLink>
           </div>

@@ -33,6 +33,21 @@ exports.uploadTourImages = upload.fields([
     },
 ]);
 
+exports.getTourBySlug = catchAsync(async (req, res, next) => {
+    const { slug } = req.params;
+
+    const tour = await Tour.findOne({ slug }).populate({
+        path: 'reviews',
+        fields: 'review rating user',
+    });
+
+    res.status(201).json({
+        status: 'success',
+        message: `Found tour with name: ${slug}`,
+        data: tour,
+    });
+});
+
 exports.resizeTourImages = catchAsync(async (req, res, next) => {
     if (!req.files.images || !req.files.imageCover) return next();
 

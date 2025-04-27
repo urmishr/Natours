@@ -1,15 +1,16 @@
-import scenicImage from './../assets/tours/tour-1-cover.jpg';
 import { LuCalendarClock } from 'react-icons/lu';
 import { FaLocationArrow } from 'react-icons/fa6';
+import { useTour } from '../context/TourProvider';
 
 export default function TourImageSection() {
+  const { currentTour } = useTour();
   return (
     <section className='relative'>
       {/* tour image */}
       <div className='relative z-2 md:h-[380px] lg:h-[470px]'>
         <div className='bg-natours/40 absolute h-full w-full'></div>
         <img
-          src={scenicImage}
+          src={`/img/tours/${currentTour.imageCover}`}
           alt='scenic image'
           className='block h-full w-full object-cover'
         />
@@ -18,7 +19,7 @@ export default function TourImageSection() {
       <div className='absolute inset-0 z-4 flex flex-col items-center justify-center'>
         <p>
           <span className='natours-gradient-t px-3 py-2 text-3xl font-light text-white shadow-md lg:text-4xl'>
-            The Forest Hiker
+            {currentTour.name}
           </span>
         </p>
         <div className='flex gap-2 p-5 lg:gap-5'>
@@ -26,13 +27,13 @@ export default function TourImageSection() {
             <span>
               <LuCalendarClock />
             </span>
-            7 Days
+            {currentTour.duration} Days
           </p>
           <p className='flex items-center gap-2 text-lg text-white'>
             <span>
               <FaLocationArrow />
             </span>
-            Miami, Usa
+            {currentTour.startLocation.description}
           </p>
         </div>
       </div>

@@ -1,4 +1,9 @@
+import { useTour } from '../context/TourProvider';
+import { useAuth } from '../context/AuthProvider';
+
 export default function BookTour() {
+  const { currentTour } = useTour();
+  const { isAuthenticated } = useAuth();
   return (
     <section className='px-5 py-7 md:px-10 lg:px-20'>
       <div className='relative flex flex-col justify-center overflow-hidden rounded-3xl bg-stone-300/20 py-10 shadow-lg'>
@@ -9,12 +14,14 @@ export default function BookTour() {
             </h1>
             <p className='text-center text-stone-800/50 italic'>
               <span className='font-semibold text-stone-600'>
-                7 days. 1 adventure
+                {currentTour.duration} days. 1 adventure
               </span>
               .
               <br />
               Infinite memories. Make it yours today! <br />
-              Login To book tour
+              <span className='text-red-400'>
+                {!isAuthenticated && 'Login To book tour'}
+              </span>
             </p>
           </div>
           <button className='btn-primary h-fit w-fit px-4 py-2 lg:py-4'>

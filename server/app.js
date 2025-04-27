@@ -92,7 +92,8 @@ const limiter = rateLimit({
     windowMs: 60 * 60 * 1000,
     message: 'Too many requests from this ip! rate limit exceeded',
 });
-app.use('/api', limiter);
+
+// app.use('/api', limiter);
 
 //used for logging details and adding current request time
 app.use((req, res, next) => {
