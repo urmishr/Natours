@@ -9,50 +9,56 @@ import MyBookings from './components/MyBookings';
 
 import TourOverview from './page/TourOverview';
 import AllTours from './page/AllTours';
-import { AuthProvier } from './context/authContext';
+import { AuthProvier } from './context/AuthProvider';
 import PageNotFound from './page/PageNotFound';
 import ProtectedRoute from './components/ProtectedRoute';
+import { TourProvider } from './context/TourProvider';
+import ForgotPassword from './components/ForgotPassword';
 
 function App() {
   return (
     <AuthProvier>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<AppLayout />}>
-            <Route index element={<HomePage />} />
-            <Route path='login' element={<Login />} />
-            <Route path='signup' element={<Signup />} />
-            <Route path='tours' element={<AllTours />} />
-            <Route path='tour/:id' element={<TourOverview />} />
-            <Route
-              path='account'
-              element={
-                <ProtectedRoute>
-                  <Account />
-                </ProtectedRoute>
-              }
-            >
+      <TourProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<AppLayout />}>
+              <Route index element={<HomePage />} />
+              <Route path='login' element={<Login />} />
+              <Route path='forgot-password' element={<ForgotPassword />} />
+
+              <Route path='signup' element={<Signup />} />
+              <Route path='tours' element={<AllTours />} />
+              <Route path='tour/:slug' element={<TourOverview />} />
               <Route
-                index
+                path='account'
                 element={
                   <ProtectedRoute>
-                    <Settings />
+                    <Account />
                   </ProtectedRoute>
                 }
-              />
-              <Route
-                path='my-bookings'
-                element={
-                  <ProtectedRoute>
-                    <MyBookings />
-                  </ProtectedRoute>
-                }
-              />
+              >
+                <Route
+                  index
+                  element={
+                    <ProtectedRoute>
+                      <Settings />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path='my-bookings'
+                  element={
+                    <ProtectedRoute>
+                      <MyBookings />
+                    </ProtectedRoute>
+                  }
+                />
+              </Route>
+              <Route path='*' element={<PageNotFound />} />
             </Route>
-            <Route path='*' element={<PageNotFound />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+      </TourProvider>
     </AuthProvier>
   );
 }

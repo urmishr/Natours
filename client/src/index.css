@@ -108,4 +108,11 @@
   .loader {
     @apply box-border inline-block size-6 animate-spin rounded-full border-t-2 border-r-2 border-white border-r-transparent;
   }
+  .loaderGreen {
+    @apply border-natours box-border inline-block animate-spin rounded-full border-t-2 border-r-2 border-r-transparent;
+  }
+
+  .star-svg {
+    display: inline;
+  }
 }

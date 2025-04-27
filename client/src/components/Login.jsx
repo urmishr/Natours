@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/authContext';
+import { useAuth } from '../context/AuthProvider';
 import Loader from './Loader';
 import toast from 'react-hot-toast';
 import validator from 'validator';
@@ -98,6 +98,15 @@ export default function Login() {
               setPasswordError(false);
             }}
           />
+        </div>
+        <div>
+          <NavLink
+            to='/forgot-password'
+            className='text-natours font-semibold'
+            state={{ emailTyped: email }}
+          >
+            Forgot Password?
+          </NavLink>
         </div>
         <div>
           <button

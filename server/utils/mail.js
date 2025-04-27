@@ -2,10 +2,10 @@ const nodemailer = require('nodemailer');
 const pug = require('pug');
 const htmlToText = require('html-to-text');
 module.exports = class Email {
-    constructor(user, url) {
+    constructor(user, otp) {
         this.to = user.email;
         this.firstName = user.name.split(' ')[0];
-        this.url = url;
+        this.otp = otp;
         this.from = `Natours || Nature and Tours <${process.env.BREVO_SENDER}>`;
     }
 
@@ -26,7 +26,7 @@ module.exports = class Email {
             `${__dirname}/../views/email/${template}.pug`,
             {
                 firstName: this.firstName,
-                url: this.url,
+                otp: this.otp,
                 subject,
             },
         );
@@ -49,6 +49,12 @@ module.exports = class Email {
         await this.send(
             'passwordReset',
             'Your password reset token is valid for 10 mins!',
+        );
+    }
+    async sendPasswordResetOtp() {
+        await this.send(
+            'sendotp_template',
+            'Your password reset OTP is valid for 10 mins!',
         );
     }
 };

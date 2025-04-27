@@ -40,6 +40,8 @@ const userSchema = new mongoose.Schema({
     passwordChangedAt: Date,
     resetPasswordToken: String,
     resetPasswordExpires: Date,
+    passwordResetOTP: { type: String, select: false },
+    passwordResetOTPExpires: Date,
     active: { type: Boolean, default: true, select: false },
 });
 
@@ -56,14 +58,23 @@ userSchema.pre('save', function (next) {
 });
 
 userSchema.pre('save', async function (next) {
-    if (!this.isModified('password')) return next();
-    this.password = await bcrypt.hash(this.password, 10);
-    this.confirmPassword = undefined;
+    if (this.isModified('password')) {
+        this.password = await bcrypt.hash(this.password, 10);
+        this.confirmPassword = undefined;
+        if (!this.isNew) {
+            this.passwordChangedAt = Date.now() - 1000;
+        }
+    }
+
+    // Hash OTP if modified
+    if (this.isModified('passwordResetOTP') && this.passwordResetOTP) {
+        this.passwordResetOTP = await bcrypt.hash(this.passwordResetOTP, 10);
+    }
     next();
 });
 
-userSchema.methods.correctPassword = async function (userPassword, dbPassword) {
-    return await bcrypt.compare(userPassword, dbPassword);
+userSchema.methods.checkHash = async function (userValue, dbValue) {
+    return await bcrypt.compare(userValue, dbValue);
 };
 
 userSchema.methods.createResetPasswordToken = function () {
@@ -77,6 +88,15 @@ userSchema.methods.createResetPasswordToken = function () {
     this.resetPasswordExpires = Date.now() + 10 * 60 * 1000;
 
     return resetToken;
+};
+
+userSchema.methods.generateOtp = function () {
+    const otp = Math.floor(100000 + Math.random() * 900000);
+
+    this.passwordResetOTP = otp;
+
+    this.passwordResetOTPExpires = Date.now() + 10 * 60 * 1000;
+    return otp;
 };
 
 userSchema.methods.changePasswordAfter = function (JWTTimestamp) {

@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/authContext';
+import { useAuth } from '../context/AuthProvider';
 import { MdOutlineTravelExplore } from 'react-icons/md';
 import { IoLogIn, IoLogOut } from 'react-icons/io5';
 import { FaUserPlus } from 'react-icons/fa';
@@ -73,7 +73,7 @@ export default function Navlinks({ setIsOpen }) {
             <span>Logout</span>
             {loading && (
               <span>
-                <Loader />
+                <Loader color='green' className={'size-6'} />
               </span>
             )}
           </button>
