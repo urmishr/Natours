@@ -5,7 +5,7 @@ const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appErrors');
 const Email = require('../utils/mail');
 
-const crypto = require('crypto');
+// const crypto = require('crypto');
 
 const signToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -175,38 +175,40 @@ exports.sendOTP = catchAsync(async (req, res, next) => {
     const user = await User.findOne({ email }).select('+active');
     if (!user)
         return next(
-            new AppError('User is not available! Please signup first', 404),
+            new AppError('User is not found! Please signup first', 404),
         );
     if (!user.active) return next(new AppError('Account is deleted', 404));
 
-    const otp = user.generateOtp();
-    // await new Email(user, otp).sendPasswordResetOtp();
-    await user.save({ validateBeforeSave: false });
-
-    res.status(201).json({
-        status: 'success',
-        message: `Verification otp sent to: ${email}`,
-
-        otp,
-    });
-});
-
-exports.changePassword = catchAsync(async (req, res, next) => {
-    const { email, otp, newPassword, confirmPassword } = req.body;
-
-    if (!email || !otp || !newPassword || !confirmPassword) {
+    if (
+        user.passwordOtpSentAt &&
+        user.passwordOtpSentAt.getTime() > Date.now() - 60 * 1000
+    ) {
         return next(
             new AppError(
-                'Email,OTP, new password, and confirm password are required',
+                'OTP has been already sent recently! Please wait before requesting again.',
                 400,
             ),
         );
     }
 
-    if (newPassword !== confirmPassword) {
-        return next(
-            new AppError('New password and confirm password do not match', 400),
-        );
+    const otp = user.generateOtp();
+    if (process.env.NODE_ENV === 'production')
+        await new Email(user, otp).sendPasswordResetOtp();
+    await user.save({ validateBeforeSave: false });
+    console.log(otp);
+
+    res.status(201).json({
+        status: 'success',
+        message: `Verification otp sent to: ${email}`,
+        otp,
+    });
+});
+
+exports.verifyOtp = catchAsync(async (req, res, next) => {
+    const { email, otp } = req.body;
+
+    if (!email || !otp) {
+        return next(new AppError('Email and OTP are required', 400));
     }
 
     const user = await User.findOne({
@@ -214,75 +216,66 @@ exports.changePassword = catchAsync(async (req, res, next) => {
     }).select('+passwordResetOTP +passwordResetOTPExpires');
 
     if (!user) {
-        return next(new AppError('No user found', 400));
+        return next(new AppError('No user found with this email', 400));
     }
 
     if (!user.passwordResetOTP)
-        return next(new AppError('Please generate new otp first', 400));
+        return next(new AppError('Please generate new otp first!', 400));
 
+    if (user.passwordResetOTPExpires < Date.now())
+        return next(
+            new AppError('Otp is expired! Please generate new otp', 403),
+        );
     if (!(await user.checkHash(otp, user.passwordResetOTP)))
-        return next(new AppError('OTP is either expired or invalid!', 404));
-    user.password = newPassword;
-    user.confirmPassword = confirmPassword;
-    user.passwordResetOTP = undefined;
-    user.passwordResetOTPExpires = undefined;
-    await user.save();
-
-    createSendToken(res, user, 200, 'Password reset successfully');
-});
-
-exports.forgotPassword = catchAsync(async (req, res, next) => {
-    const { email } = req.body;
-
-    if (!email) return next(new AppError('Email id is required!!!', 404));
-
-    const user = await User.findOne({ email });
-
-    if (!user)
-        return next(new AppError('No user id found with this user id', 404));
-
-    const resetToken = user.createResetPasswordToken();
+        return next(new AppError('Invalid OTP! Please Try again', 404));
+    user.otpVerified = true;
+    user.passwordResetOTP = null;
+    user.passwordResetOTPExpires = null;
+    user.passwordOtpSentAt = null;
+    user.otpSessionExpires = Date.now() + 10 * 60 * 1000;
     await user.save({ validateBeforeSave: false });
 
-    try {
-        const resetURL = `${req.protocol}://${req.get('host')}/api/v1/user/reset-password/${resetToken}`;
-
-        await new Email(user, resetURL).sendPasswordReset();
-
-        res.status(200).json({
-            status: 'success',
-            message: 'Token sent to email!',
-        });
-    } catch {
-        user.passwordResetToken = undefined;
-        user.resetPasswordExpires = undefined;
-        await user.save({ validateBeforeSave: false });
-
-        return next(
-            new AppError('Error sending email please try again!!', 404),
-        );
-    }
+    res.status(200).json({
+        status: 'success',
+        message: 'Otp Verified Successfully',
+    });
 });
+
 exports.resetPassword = catchAsync(async (req, res, next) => {
-    const hashedToken = crypto
-        .createHash('sha256')
-        .update(req.params.token)
-        .digest('hex');
+    const { email, newPassword, confirmPassword } = req.body;
 
     const user = await User.findOne({
-        resetPasswordToken: hashedToken,
-        resetPasswordExpires: { $gt: Date.now() },
+        email,
     });
 
-    if (!user) return next(new AppError('Token is invalid or expired', 400));
+    if (!user)
+        return next(new AppError('Error findind user! Please Try again', 400));
 
-    user.password = req.body.password;
-    user.confirmPassword = req.body.confirmPassword;
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpires = undefined;
+    if (!user.otpVerified)
+        return next(
+            new AppError(
+                'Please Verify your otp first to change password!',
+                400,
+            ),
+        );
+    if (user.otpSessionExpires < Date.now()) {
+        user.otpVerified = false;
+        await user.save({ validateBeforeSave: false });
+        return next(
+            new AppError(
+                'Session has expired! Please reverify OTP to change password',
+                400,
+            ),
+        );
+    }
+
+    user.password = newPassword;
+    user.confirmPassword = confirmPassword;
+    user.otpVerified = false;
+    user.otpSessionExpires = null;
     await user.save();
 
-    createSendToken(res, user, 201, 'you are logged in');
+    createSendToken(res, user, 201, 'Password has been reset successfully');
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {

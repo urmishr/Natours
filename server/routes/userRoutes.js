@@ -12,9 +12,10 @@ route.post(
 route.post('/login', authController.login);
 route.get('/logout', authController.logout);
 route.post('/forgot-password/send-otp', authController.sendOTP);
-route.post('/forgot-password/change-password', authController.changePassword);
-route.post('/forgot-password', authController.forgotPassword);
-route.patch('/reset-password/:token', authController.resetPassword);
+route.post('/forgot-password/verify-otp', authController.verifyOtp);
+route.patch('/reset-password', authController.resetPassword);
+// route.post('/forgot-password', authController.forgotPassword);
+// route.patch('/reset-password/:token', authController.resetPassword);
 
 route.use(authController.protect);
 route.get(

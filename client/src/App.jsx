@@ -13,7 +13,9 @@ import { AuthProvier } from './context/AuthProvider';
 import PageNotFound from './page/PageNotFound';
 import ProtectedRoute from './components/ProtectedRoute';
 import { TourProvider } from './context/TourProvider';
-import ForgotPassword from './components/ForgotPassword';
+import SendOtp from './components/SendOtp';
+import VerifyOtp from './components/VerifyOtp';
+import ChangePassword from './components/ChangePassword';
 
 function App() {
   return (
@@ -24,7 +26,11 @@ function App() {
             <Route path='/' element={<AppLayout />}>
               <Route index element={<HomePage />} />
               <Route path='login' element={<Login />} />
-              <Route path='forgot-password' element={<ForgotPassword />} />
+              <Route path='forgot-password'>
+                <Route index path='send-otp' element={<SendOtp />} />
+                <Route path='verify-otp' element={<VerifyOtp />} />
+                <Route path='reset-password' element={<ChangePassword />} />
+              </Route>
 
               <Route path='signup' element={<Signup />} />
               <Route path='tours' element={<AllTours />} />
