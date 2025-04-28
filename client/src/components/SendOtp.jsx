@@ -5,6 +5,7 @@ import { IoArrowBackCircle } from 'react-icons/io5';
 import validator from 'validator';
 import toast from 'react-hot-toast';
 import Loader from './Loader';
+import { motion } from 'motion/react';
 
 export default function ForgotPassword() {
   const { loading, sendOtp, error, resetError } = useAuth();
@@ -36,7 +37,12 @@ export default function ForgotPassword() {
 
   return (
     <section className='my-auto flex w-full flex-col md:items-center'>
-      <div className='mx-5 my-14 flex flex-col justify-between space-y-8 rounded-lg bg-white px-5 py-7 shadow-lg md:min-w-[600px] md:p-13 md:shadow-xl'>
+      <motion.div
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: 50 }}
+        className='mx-5 my-14 flex flex-col justify-between space-y-8 rounded-lg bg-white px-5 py-7 shadow-lg md:min-w-[600px] md:p-13 md:shadow-xl'
+      >
         <div className='flex items-center gap-3 space-y-1'>
           <IoArrowBackCircle
             className='text-natours m-0 size-7'
@@ -76,14 +82,16 @@ export default function ForgotPassword() {
         )}
 
         <div>
-          <button
+          <motion.button
+            whileTap={{ scale: 0.7 }}
+            transition={{ type: 'keyframes', duration: 0.01 }}
             className='btn-primary w-1/2 py-3 md:w-1/3'
             onClick={handleSendOtp}
           >
             {loading ? <Loader /> : 'Send OTP'}
-          </button>
+          </motion.button>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

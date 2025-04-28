@@ -1,6 +1,7 @@
 import { FaLocationArrow, FaMapPin, FaPeopleGroup } from 'react-icons/fa6';
 import { MdOutlineCalendarMonth } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
+import { motion } from 'motion/react';
 
 export default function Tour({ tour }) {
   function capitalize(str) {
@@ -9,7 +10,7 @@ export default function Tour({ tour }) {
   }
 
   return (
-    <section className='my-7 flex w-full items-center justify-center'>
+    <section className='m-7 flex items-center justify-center'>
       {/* image section */}
 
       <div className='max-w-[388px] overflow-clip rounded bg-white shadow-lg'>
@@ -20,7 +21,7 @@ export default function Tour({ tour }) {
               src={`/img/tours/${tour.imageCover}`}
               // src={scenicImage}
               alt='scenic image'
-              className='min-h-[250px] min-w-[388px]'
+              className='min-h-[250px] min-w-[350px]'
             />
           </div>
           <h3 className='absolute right-5 bottom-6'>
@@ -89,7 +90,7 @@ export default function Tour({ tour }) {
           <div className='flex w-1/2 items-center justify-center'>
             <NavLink
               to={`/tour/${tour.slug}`}
-              className='btn-primary px-8 py-3'
+              className='btn-primary px-8 py-3 shadow-md'
               state={{ tour }}
             >
               Details

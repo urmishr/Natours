@@ -3,6 +3,7 @@ import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthProvider';
 import validator from 'validator';
 import Loader from './Loader';
+import { motion } from 'motion/react';
 
 export default function ProfileSettings() {
   const { loading, user, changeProfile } = useAuth();
@@ -85,7 +86,12 @@ export default function ProfileSettings() {
 
   return (
     <form className='w-full md:w-3/4 lg:w-1/2' onSubmit={handleProfileUpdate}>
-      <div className='my-7 flex flex-col justify-between space-y-8 rounded-lg bg-white px-6 py-7 shadow-lg md:min-w-[600px] md:p-13 md:shadow-xl'>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className='my-7 flex flex-col justify-between space-y-8 rounded-lg bg-white px-6 py-7 shadow-lg md:min-w-[600px] md:p-13 md:shadow-xl'
+      >
         <div className='flex flex-col space-y-1'>
           <h1 className='natours-gradient-text text-2xl font-bold'>
             Change Your Profile
@@ -171,7 +177,7 @@ export default function ProfileSettings() {
             {loading ? <Loader /> : 'Save'}
           </button>
         </div>
-      </div>
+      </motion.div>
     </form>
   );
 }

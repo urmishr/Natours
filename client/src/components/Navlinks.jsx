@@ -16,7 +16,7 @@ export default function Navlinks({ setIsOpen }) {
   }
 
   return (
-    <div className='flex flex-col gap-3 md:flex-row md:items-center md:justify-center'>
+    <div className='flex gap-3 md:flex-row md:items-center md:justify-center'>
       {!isAuthenticated && (
         <>
           <div className='flex items-center'>

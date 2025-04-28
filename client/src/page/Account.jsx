@@ -9,7 +9,7 @@ export default function Account() {
           to='/account'
           end
           className={({ isActive }) =>
-            `text-natours p-3 text-lg font-semibold ${isActive && 'bg-natours rounded px-3 py-3 text-white shadow-md'} `
+            `text-natours p-3 text-lg font-semibold ${isActive && 'natours-gradient rounded px-3 py-3 text-white shadow-md'} `
           }
         >
           Account Settings
@@ -18,7 +18,7 @@ export default function Account() {
           to='my-bookings'
           end
           className={({ isActive }) =>
-            `text-natours p-3 text-lg font-semibold ${isActive && 'bg-natours rounded px-3 py-3 text-white shadow-md'} `
+            `text-natours p-3 text-lg font-semibold ${isActive && 'natours-gradient rounded px-3 py-3 text-white shadow-md'} `
           }
         >
           My Bookings

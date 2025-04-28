@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import validator from 'validator';
 import { useAuth } from '../context/AuthProvider';
 import Loader from './Loader';
+import { motion } from 'motion/react';
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -24,6 +25,16 @@ export default function Signup() {
 
   function validateFields(fullName, email, password, confirmPassword) {
     let valid = true;
+
+    if (!fullName && !email && !password && !confirmPassword) {
+      toast.error('All fields are required');
+      setFullNameError(true);
+      setEmailError(true);
+      setPasswordError(true);
+      setConfirmPasswordError(true);
+
+      return (valid = false);
+    }
 
     // Full Name: required, at least 2 words
     if (!fullName.trim() || fullName.trim().split(' ').length < 2) {
@@ -114,7 +125,12 @@ export default function Signup() {
   return (
     <section className='my-10 flex w-full flex-col md:items-center'>
       <form onSubmit={handleSignup}>
-        <div className='mx-5 flex flex-col justify-between space-y-8 rounded-lg bg-white px-5 py-7 shadow-lg md:min-w-[600px] md:p-13 md:shadow-xl'>
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 50 }}
+          className='mx-5 flex flex-col justify-between space-y-8 rounded-lg bg-white px-5 py-7 shadow-lg md:min-w-[600px] md:p-13 md:shadow-xl'
+        >
           <div className='flex flex-col space-y-1'>
             <h1 className='natours-gradient-text text-2xl font-bold'>
               Register your Account
@@ -231,11 +247,15 @@ export default function Signup() {
             </label>
           </div>
           <div>
-            <button className='btn-primary w-1/2 py-3 md:w-1/3'>
+            <motion.button
+              whileTap={{ scale: 0.8 }}
+              transition={{ type: 'keyframes', duration: 0.01 }}
+              className='btn-primary w-1/2 py-3 md:w-1/3'
+            >
               {loading ? <Loader /> : 'Signup'}
-            </button>
+            </motion.button>
           </div>
-        </div>
+        </motion.div>
       </form>
     </section>
   );
