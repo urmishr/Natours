@@ -12,7 +12,7 @@ export default function Account() {
             `text-natours p-3 text-lg font-semibold ${isActive && 'bg-natours rounded px-3 py-3 text-white shadow-md'} `
           }
         >
-          Accoount Settings
+          Account Settings
         </NavLink>
         <NavLink
           to='my-bookings'

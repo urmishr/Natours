@@ -41,7 +41,10 @@ const userSchema = new mongoose.Schema({
     resetPasswordToken: String,
     resetPasswordExpires: Date,
     passwordResetOTP: { type: String, select: false },
+    passwordOtpSentAt: Date,
     passwordResetOTPExpires: Date,
+    otpVerified: { type: Boolean, default: false },
+    otpSessionExpires: Date,
     active: { type: Boolean, default: true, select: false },
 });
 
@@ -94,7 +97,7 @@ userSchema.methods.generateOtp = function () {
     const otp = Math.floor(100000 + Math.random() * 900000);
 
     this.passwordResetOTP = otp;
-
+    this.passwordOtpSentAt = Date.now();
     this.passwordResetOTPExpires = Date.now() + 10 * 60 * 1000;
     return otp;
 };

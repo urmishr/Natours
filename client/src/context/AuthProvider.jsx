@@ -26,6 +26,8 @@ function reducer(state, action) {
 
     case 'logout':
       return { ...state, currentUser: null, error: '', isAuthenticated: false };
+    case 'resetError':
+      return { ...state, error: '' };
 
     default: {
       return new Error(`Error at ${action.type}`);
@@ -48,6 +50,7 @@ function AuthProvier({ children }) {
   async function login(email, password) {
     try {
       dispatch({ type: 'loading', payload: true });
+      dispatch({ type: 'resetError' });
       const res = await axios({
         method: 'POST',
         url: '/api/v1/users/login',
@@ -59,7 +62,7 @@ function AuthProvier({ children }) {
     } catch (e) {
       console.error(e.response.data);
       toast.error(e.response.data.message);
-      dispatch({ type: 'error', payload: e });
+      dispatch({ type: 'error', payload: error.response.data.message });
       dispatch({ type: 'logout' });
     } finally {
       dispatch({ type: 'loading', payload: false });
@@ -69,6 +72,7 @@ function AuthProvier({ children }) {
   async function loadUser() {
     try {
       const res = await axios('/api/v1/users/me', { withCredentials: true });
+      dispatch({ type: 'resetError' });
 
       console.log(res);
       const user = {
@@ -81,13 +85,15 @@ function AuthProvier({ children }) {
       dispatch({ type: 'login', payload: user });
       localStorage.setItem('currentUser', JSON.stringify(user));
     } catch (error) {
-      console.log(error.response.data.message);
+      dispatch({ type: 'error', payload: error.response.data.message });
     }
   }
 
   async function signup(formdata) {
     try {
       dispatch({ type: 'loading', payload: true });
+      dispatch({ type: 'resetError' });
+
       const res = await axios.post('/api/v1/users/signup', formdata, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -101,7 +107,7 @@ function AuthProvier({ children }) {
     } catch (e) {
       console.error(e.response.data);
       toast.error(e.response.data.message);
-      dispatch({ type: 'error', payload: e.message });
+      dispatch({ type: 'error', payload: error.response.data.message });
     } finally {
       dispatch({ type: 'loading', payload: false });
     }
@@ -110,6 +116,8 @@ function AuthProvier({ children }) {
   async function logout() {
     try {
       dispatch({ type: 'loading', payload: true });
+      dispatch({ type: 'resetError' });
+
       const res = await axios('/api/v1/users/logout');
       console.log(res);
 
@@ -117,7 +125,7 @@ function AuthProvier({ children }) {
       localStorage.removeItem('currentUser');
     } catch (error) {
       console.log(error);
-      dispatch({ type: 'error', payload: error.response });
+      dispatch({ type: 'error', payload: error.response.data.message });
     } finally {
       dispatch({ type: 'loading', payload: false });
     }
@@ -126,6 +134,8 @@ function AuthProvier({ children }) {
   async function changePassword(currentPassword, newPassword, confirmPassword) {
     try {
       dispatch({ type: 'loading', payload: true });
+      dispatch({ type: 'resetError' });
+
       await axios({
         method: 'PATCH',
         url: '/api/v1/users/update-password',
@@ -135,7 +145,71 @@ function AuthProvier({ children }) {
       await logout();
     } catch (error) {
       console.error(error);
+      dispatch({ type: 'error', payload: error.response.data.message });
       toast.error(error.response.data.message);
+    } finally {
+      dispatch({ type: 'loading', payload: false });
+    }
+  }
+
+  async function sendOtp(email) {
+    try {
+      dispatch({ type: 'loading', payload: true });
+      dispatch({ type: 'resetError' });
+
+      const res = await axios.post('/api/v1/users/forgot-password/send-otp', {
+        email,
+      });
+      console.log(res.data);
+      toast.success('Verification code has been sent to your Email', {
+        duration: 4000,
+      });
+      return true;
+    } catch (error) {
+      console.log(error);
+      dispatch({ type: 'error', payload: error.response.data.message });
+      return false;
+    } finally {
+      dispatch({ type: 'loading', payload: false });
+    }
+  }
+
+  async function verifyOtp(otp, email) {
+    try {
+      dispatch({ type: 'loading', payload: true });
+      dispatch({ type: 'resetError' });
+      const res = await axios.post('/api/v1/users/forgot-password/verify-otp', {
+        otp,
+        email,
+      });
+      console.log(res.data);
+      toast.success(res.data.message);
+      return true;
+    } catch (error) {
+      console.log(error.response.data.message);
+      dispatch({ type: 'error', payload: error.response.data.message });
+      return false;
+    } finally {
+      dispatch({ type: 'loading', payload: false });
+    }
+  }
+
+  async function resetPassword(email, newPassword, confirmPassword) {
+    try {
+      dispatch({ type: 'loading', payload: true });
+      dispatch({ type: 'resetError' });
+
+      const res = await axios.patch('/api/v1/users/reset-password', {
+        email,
+        newPassword,
+        confirmPassword,
+      });
+      console.log(res.data);
+      toast.success(res.data.message);
+      return true;
+    } catch (error) {
+      console.error(error.response.data.message);
+      dispatch({ type: 'error', payload: error.response.data.message });
     } finally {
       dispatch({ type: 'loading', payload: false });
     }
@@ -144,6 +218,8 @@ function AuthProvier({ children }) {
   async function changeProfile(formData) {
     try {
       dispatch({ type: 'loading', payload: true });
+      dispatch({ type: 'resetError' });
+
       const res = await axios({
         method: 'PATCH',
         url: '/api/v1/users/update-me',
@@ -159,10 +235,14 @@ function AuthProvier({ children }) {
     } catch (error) {
       console.error(error);
       toast.error(error.response?.data?.message || 'Failed to update profile');
-      dispatch({ type: 'error', payload: error.message });
+      dispatch({ type: 'error', payload: error.response.data.message });
     } finally {
       dispatch({ type: 'loading', payload: false });
     }
+  }
+
+  function resetError() {
+    dispatch({ type: 'resetError' });
   }
 
   return (
@@ -172,6 +252,10 @@ function AuthProvier({ children }) {
         signup,
         changePassword,
         changeProfile,
+        sendOtp,
+        verifyOtp,
+        resetPassword,
+        resetError,
         error,
         loading,
         user: currentUser,

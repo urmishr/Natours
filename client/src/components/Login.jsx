@@ -101,7 +101,7 @@ export default function Login() {
         </div>
         <div>
           <NavLink
-            to='/forgot-password'
+            to='/forgot-password/send-otp'
             className='text-natours font-semibold'
             state={{ emailTyped: email }}
           >
