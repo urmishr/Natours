@@ -39,7 +39,9 @@ function TourProvider({ children }) {
   async function getAllTours() {
     try {
       dispatch({ type: 'loading', payload: true });
-      const res = await axios.get('/api/v1/tours');
+      const res = await axios.get(
+        'https://natours-aos3.onrender.com/api/v1/tours',
+      );
       dispatch({ type: 'loadTours', payload: res.data.data.docs });
     } catch (error) {
       dispatch({ type: 'error', payload: error.response });
@@ -51,9 +53,12 @@ function TourProvider({ children }) {
   async function getCurrentTour(slug) {
     try {
       dispatch({ type: 'loading', payload: true });
-      const res = await axios.get(`/api/v1/tours/tour/${slug}`);
+      const res = await axios.get(
+        `https://natours-aos3.onrender.com/api/v1/tours/tour/${slug}`,
+      );
       dispatch({ type: 'setCurrentTour', payload: res.data.data });
     } catch (error) {
+      console.log(error);
     } finally {
       dispatch({ type: 'loading', payload: false });
     }

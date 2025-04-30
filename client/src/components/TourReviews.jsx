@@ -23,7 +23,7 @@ export default function TourReviews() {
               ratings={review.rating}
               key={review._id}
               userName={review.user.name}
-              photo={`/img/users/${review.user.photo}`}
+              photo={`https://natours-aos3.onrender.com/img/users/${review.user.photo}`}
               review={review.review}
             />
           ))
