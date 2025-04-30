@@ -39,7 +39,7 @@ app.post(
 app.use(
     cors({
         origin: [
-            'nimble-malasada-478324.netlify.app',
+            'https://statuesque-belekoy-f6fe44.netlify.app',
             'https://natours-aos3.onrender.com',
         ],
         credentials: true,
