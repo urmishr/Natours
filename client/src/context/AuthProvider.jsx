@@ -69,7 +69,10 @@ function AuthProvier({ children }) {
 
   async function loadUser() {
     try {
-      const res = await axios('/api/v1/users/me', { withCredentials: true });
+      const res = await axios(
+        'https://natours-aos3.onrender.com/api/v1/users/me',
+        { withCredentials: true },
+      );
       dispatch({ type: 'resetError' });
 
       const user = {
