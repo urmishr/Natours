@@ -14,7 +14,7 @@ export default function Navbar() {
   // replace with your backend URL or env var
 
   const userPhoto =
-    user && user.photo ? `/img/users/${user.photo}` : `/img/users/default.jpg`;
+    user && user.photo ? `https://natours-aos3.onrender.com/img/users/${user.photo}` : `https://natours-aos3.onrender.com/img/users/default.jpg`;
 
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();

@@ -53,7 +53,7 @@ function AuthProvier({ children }) {
       dispatch({ type: 'resetError' });
       const res = await axios({
         method: 'POST',
-        url: '/api/v1/users/login',
+        url: 'https://natours-aos3.onrender.com/api/v1/users/login',
         data: { email, password },
         withCredentials: true,
       });
@@ -91,12 +91,16 @@ function AuthProvier({ children }) {
       dispatch({ type: 'loading', payload: true });
       dispatch({ type: 'resetError' });
 
-      const res = await axios.post('/api/v1/users/signup', formdata, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
+      const res = await axios.post(
+        'https://natours-aos3.onrender.com/api/v1/users/signup',
+        formdata,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+          withCredentials: true,
         },
-        withCredentials: true,
-      });
+      );
 
       toast.success('Signup successful!');
       await loadUser();
@@ -113,7 +117,7 @@ function AuthProvier({ children }) {
       dispatch({ type: 'loading', payload: true });
       dispatch({ type: 'resetError' });
 
-      await axios('/api/v1/users/logout');
+      await axios('https://natours-aos3.onrender.com/api/v1/users/logout');
 
       dispatch({ type: 'logout' });
       localStorage.removeItem('currentUser');
@@ -131,7 +135,7 @@ function AuthProvier({ children }) {
 
       await axios({
         method: 'PATCH',
-        url: '/api/v1/users/update-password',
+        url: 'https://natours-aos3.onrender.com/api/v1/users/update-password',
         data: { currentPassword, newPassword, confirmPassword },
       });
       toast.success('Password Changed Successfully!');
@@ -149,9 +153,12 @@ function AuthProvier({ children }) {
       dispatch({ type: 'loading', payload: true });
       dispatch({ type: 'resetError' });
 
-      const res = await axios.post('/api/v1/users/forgot-password/send-otp', {
-        email,
-      });
+      const res = await axios.post(
+        'https://natours-aos3.onrender.com/api/v1/users/forgot-password/send-otp',
+        {
+          email,
+        },
+      );
       toast.success('Verification code has been sent to your Email', {
         duration: 4000,
       });
@@ -168,10 +175,13 @@ function AuthProvier({ children }) {
     try {
       dispatch({ type: 'loading', payload: true });
       dispatch({ type: 'resetError' });
-      const res = await axios.post('/api/v1/users/forgot-password/verify-otp', {
-        otp,
-        email,
-      });
+      const res = await axios.post(
+        'https://natours-aos3.onrender.com/api/v1/users/forgot-password/verify-otp',
+        {
+          otp,
+          email,
+        },
+      );
       toast.success(res.data.message);
       return true;
     } catch (error) {
@@ -187,11 +197,14 @@ function AuthProvier({ children }) {
       dispatch({ type: 'loading', payload: true });
       dispatch({ type: 'resetError' });
 
-      const res = await axios.patch('/api/v1/users/reset-password', {
-        email,
-        newPassword,
-        confirmPassword,
-      });
+      const res = await axios.patch(
+        'https://natours-aos3.onrender.com/api/v1/users/reset-password',
+        {
+          email,
+          newPassword,
+          confirmPassword,
+        },
+      );
       toast.success(res.data.message);
       return true;
     } catch (error) {
@@ -208,7 +221,7 @@ function AuthProvier({ children }) {
 
       const res = await axios({
         method: 'PATCH',
-        url: '/api/v1/users/update-me',
+        url: 'https://natours-aos3.onrender.com/api/v1/users/update-me',
         data: formData,
         headers: {
           'Content-Type': 'multipart/form-data',

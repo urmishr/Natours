@@ -27,7 +27,7 @@ export default function TourGuides() {
         currentTour.guides.map((guide) => (
           <GuideAvatar
             key={guide._id}
-            photo={`/img/users/${guide.photo}`}
+            photo={`https://natours-aos3.onrender.com/img/users/${guide.photo}`}
             guideName={guide.name}
             guideRole={formatGuideRole(guide.role)}
           />

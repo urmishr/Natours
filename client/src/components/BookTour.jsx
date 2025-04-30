@@ -26,7 +26,7 @@ export default function BookTour() {
       // Fetch the checkout session from the backend
       const stripe = await stripePromise;
       const session = await axios.get(
-        `/api/v1/bookings/checkout-session/${currentTour._id}`,
+        `https://natours-aos3.onrender.com/api/v1/bookings/checkout-session/${currentTour._id}`,
         { headers: { 'X-Forwarded-Host': window.location.origin } },
       );
 
