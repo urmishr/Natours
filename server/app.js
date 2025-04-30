@@ -25,6 +25,10 @@ const app = express();
 app.use(express.static(path.join(__dirname, 'client/dist')));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Set view engine to Pug
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+
 app.post(
     '/checkout',
     bodyParser.raw({ type: 'application/json' }),
