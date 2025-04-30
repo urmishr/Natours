@@ -13,7 +13,6 @@ export default function AllTours() {
     }
     getTours();
   }, []);
-  // console.log(tours);
   return (
     <motion.div
       initial={{ opacity: 0 }}

@@ -9,7 +9,6 @@ export default function Navlinks({ setIsOpen }) {
   const { isAuthenticated, logout, loading } = useAuth();
   const navigate = useNavigate();
   async function handleLogout() {
-    console.log('clicked');
     await logout();
     setIsOpen(false);
     navigate('/');

@@ -28,7 +28,6 @@ export default function ProfileSettings() {
 
   function validateFields(fullName, email) {
     let valid = true;
-    console.log();
     if (!email) {
       setEmailError(true);
       valid = false;
@@ -73,7 +72,6 @@ export default function ProfileSettings() {
     formData.append('email', email);
     formData.append('photo', photo);
 
-    console.log(formData);
     await changeProfile(formData);
   }
 

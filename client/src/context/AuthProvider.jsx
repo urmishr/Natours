@@ -57,10 +57,8 @@ function AuthProvier({ children }) {
         data: { email, password },
         withCredentials: true,
       });
-      console.log(res);
       await loadUser();
     } catch (e) {
-      console.error(e.response.data);
       toast.error(e.response.data.message);
       dispatch({ type: 'error', payload: error.response.data.message });
       dispatch({ type: 'logout' });
@@ -74,7 +72,6 @@ function AuthProvier({ children }) {
       const res = await axios('/api/v1/users/me', { withCredentials: true });
       dispatch({ type: 'resetError' });
 
-      console.log(res);
       const user = {
         id: res.data.data.doc._id,
         name: res.data.data.doc.name,
@@ -100,12 +97,10 @@ function AuthProvier({ children }) {
         },
         withCredentials: true,
       });
-      console.log(res.data);
 
       toast.success('Signup successful!');
       await loadUser();
     } catch (e) {
-      console.error(e.response.data);
       toast.error(e.response.data.message);
       dispatch({ type: 'error', payload: error.response.data.message });
     } finally {
@@ -118,13 +113,11 @@ function AuthProvier({ children }) {
       dispatch({ type: 'loading', payload: true });
       dispatch({ type: 'resetError' });
 
-      const res = await axios('/api/v1/users/logout');
-      console.log(res);
+      await axios('/api/v1/users/logout');
 
       dispatch({ type: 'logout' });
       localStorage.removeItem('currentUser');
     } catch (error) {
-      console.log(error);
       dispatch({ type: 'error', payload: error.response.data.message });
     } finally {
       dispatch({ type: 'loading', payload: false });
@@ -144,7 +137,6 @@ function AuthProvier({ children }) {
       toast.success('Password Changed Successfully!');
       await logout();
     } catch (error) {
-      console.error(error);
       dispatch({ type: 'error', payload: error.response.data.message });
       toast.error(error.response.data.message);
     } finally {
@@ -160,13 +152,11 @@ function AuthProvier({ children }) {
       const res = await axios.post('/api/v1/users/forgot-password/send-otp', {
         email,
       });
-      console.log(res.data);
       toast.success('Verification code has been sent to your Email', {
         duration: 4000,
       });
       return true;
     } catch (error) {
-      console.log(error);
       dispatch({ type: 'error', payload: error.response.data.message });
       return false;
     } finally {
@@ -182,11 +172,9 @@ function AuthProvier({ children }) {
         otp,
         email,
       });
-      console.log(res.data);
       toast.success(res.data.message);
       return true;
     } catch (error) {
-      console.log(error.response.data.message);
       dispatch({ type: 'error', payload: error.response.data.message });
       return false;
     } finally {
@@ -204,11 +192,9 @@ function AuthProvier({ children }) {
         newPassword,
         confirmPassword,
       });
-      console.log(res.data);
       toast.success(res.data.message);
       return true;
     } catch (error) {
-      console.error(error.response.data.message);
       dispatch({ type: 'error', payload: error.response.data.message });
     } finally {
       dispatch({ type: 'loading', payload: false });
@@ -229,11 +215,9 @@ function AuthProvier({ children }) {
         },
         withCredentials: true,
       });
-      console.log(res.data);
       toast.success('Profile updated successfully!');
       await loadUser();
     } catch (error) {
-      console.error(error);
       toast.error(error.response?.data?.message || 'Failed to update profile');
       dispatch({ type: 'error', payload: error.response.data.message });
     } finally {

@@ -11,11 +11,9 @@ import { useEffect } from 'react';
 
 export default function TourOverview() {
   const { slug } = useParams();
-  console.log(slug);
   const { tours, currentTour, loading, getCurrentTour, getAllTours } =
     useTour();
 
-  console.log(currentTour);
   useEffect(() => {
     async function fetchData() {
       // If tours are not loaded yet, load them

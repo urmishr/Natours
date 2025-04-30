@@ -99,7 +99,6 @@ export default function Signup() {
     if (photo) {
       formData.append('photo', photo);
     }
-    console.log(formData);
 
     if (validateFields(fullName, email, password, confirmPassword)) {
       await signup(formData);
@@ -109,10 +108,8 @@ export default function Signup() {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    console.log(file.type.split('/')[1]);
     if (file.type.split('/')[1] !== 'jpeg' && file.type.split('/')[1] !== 'png')
       return toast.error('Please Upload Jpeg or Png image only!');
-    console.log(file);
     if (file) {
       const url = URL.createObjectURL(file);
       setPreview(url);

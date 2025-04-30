@@ -14,7 +14,6 @@ export default function VerifyOtp() {
   const navigate = useNavigate();
   const location = useLocation();
   const { emailTyped } = location.state || '';
-  console.log(emailTyped);
 
   useEffect(
     function () {
@@ -26,7 +25,6 @@ export default function VerifyOtp() {
     },
     [emailTyped, navigate],
   );
-  // console.log(otp);
 
   function onOtpSubmit(otp) {
     setOtp(otp);

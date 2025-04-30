@@ -40,11 +40,9 @@ function TourProvider({ children }) {
     try {
       dispatch({ type: 'loading', payload: true });
       const res = await axios.get('/api/v1/tours');
-      // console.log(res.data.data.docs);
       dispatch({ type: 'loadTours', payload: res.data.data.docs });
     } catch (error) {
       dispatch({ type: 'error', payload: error.response });
-      console.error(error);
     } finally {
       dispatch({ type: 'loading', payload: false });
     }
@@ -55,9 +53,7 @@ function TourProvider({ children }) {
       dispatch({ type: 'loading', payload: true });
       const res = await axios.get(`/api/v1/tours/tour/${slug}`);
       dispatch({ type: 'setCurrentTour', payload: res.data.data });
-      // console.log(res.data.data);
     } catch (error) {
-      console.log(error);
     } finally {
       dispatch({ type: 'loading', payload: false });
     }
