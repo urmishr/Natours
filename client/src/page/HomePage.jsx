@@ -9,8 +9,8 @@ export default function HomePage() {
           Discover Your next adventure
         </h1>
       </div>
-      <div className='relative mx-4 mt-2 overflow-hidden rounded md:w-3/4'>
-        <div className='img-clip lg:rounded'>
+      <div className='relative mx-4 mt-2 overflow-hidden rounded bg-white p-3 shadow-md md:w-3/4 lg:rounded-lg lg:p-4'>
+        <div className='img-clip relative lg:rounded'>
           <div className='bg-natours/40 absolute h-full w-full'></div>
           <img src={scenicImage} alt='scenic image' className='lg:shadow' />
         </div>
@@ -25,12 +25,14 @@ export default function HomePage() {
           "Book tours with trusted guides worldwide"
         </p>
       </div>
-      <NavLink
-        to='/tours'
-        className='btn-primary my-13 rounded-full px-4 py-3 text-xl text-white lg:px-8 lg:py-6'
-      >
-        Explore Tours
-      </NavLink>
+      <div className='flex w-full items-center justify-evenly lg:w-1/2'>
+        <NavLink
+          to='/tours'
+          className='btn-primary my-13 rounded-full px-4 py-3 text-xl text-white lg:px-8 lg:py-6'
+        >
+          Explore Tours
+        </NavLink>
+      </div>
     </section>
   );
 }

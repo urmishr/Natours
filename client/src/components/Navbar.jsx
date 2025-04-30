@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { FaRegWindowClose } from 'react-icons/fa';
+import { IoIosCloseCircle } from 'react-icons/io';
 import { LuMenu } from 'react-icons/lu';
 import logoGreen from '../assets/logos/logo-green.png';
+import { AnimatePresence, motion } from 'motion/react';
 
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthProvider';
@@ -45,8 +46,8 @@ export default function Navbar() {
               onClick={() => setIsOpen(!isOpen)}
             />
           ) : (
-            <FaRegWindowClose
-              className='text-natours ml-auto size-7 md:hidden'
+            <IoIosCloseCircle
+              className='text-natours ml-auto size-8 md:hidden'
               onClick={() => setIsOpen(!isOpen)}
             />
           )}
@@ -69,33 +70,40 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
-      {isOpen ? (
-        <div
-          className={`border-natours absolute z-50 flex size-12 h-fit w-full bg-stone-800 shadow-2xl md:hidden`}
-        >
-          <div className='w-1/3 p-5'>
-            <ul className='flex flex-col space-y-3 text-xl'>
-              <Navlinks setIsOpen={setIsOpen} />
-            </ul>
-          </div>
-          <div className='flex w-2/3 items-end justify-center p-5'>
+      <AnimatePresence>
+        {isOpen ? (
+          <motion.div
+            key={'navbar'}
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -30 }}
+            transition={{ type: 'tween', duration: 0.1 }}
+            className={`border-natours absolute z-50 flex h-fit w-full flex-col bg-stone-800 py-3 shadow-2xl md:hidden`}
+          >
+            <div className='p-3'>
+              <ul className='flex flex-col items-center justify-center space-y-3 text-xl'>
+                <Navlinks setIsOpen={setIsOpen} />
+              </ul>
+            </div>
             {user && (
-              <NavLink
-                to='/account'
-                className={({ isActive }) =>
-                  `text-natours flex items-center space-x-2 p-2 font-bold ${isActive ? 'border-b' : ''}`
-                }
-                onClick={() => {
-                  setIsOpen(false);
-                }}
-              >
-                <img src={userPhoto} className='size-12 rounded-full' />
-                <span className='text-xl'>{capitalize(user.name)}</span>
-              </NavLink>
+              <div className='flex items-end justify-center p-3'>
+                <NavLink
+                  to='/account'
+                  className={({ isActive }) =>
+                    `text-natours flex items-center space-x-2 p-2 font-bold ${isActive ? 'border-b' : ''}`
+                  }
+                  onClick={() => {
+                    setIsOpen(false);
+                  }}
+                >
+                  <img src={userPhoto} className='size-12 rounded-full' />
+                  <span className='text-xl'>{capitalize(user.name)}</span>
+                </NavLink>
+              </div>
             )}
-          </div>
-        </div>
-      ) : null}
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </header>
   );
 }

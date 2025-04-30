@@ -1,5 +1,3 @@
-import userOne from './../assets/users/user-3.jpg';
-import userTwo from './../assets/users/user-2.jpg';
 import GuideAvatar from './GuideAvatar';
 import { useTour } from '../context/TourProvider';
 export default function TourGuides() {

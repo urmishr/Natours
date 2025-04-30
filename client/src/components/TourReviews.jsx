@@ -4,7 +4,7 @@ import UserReview from './UserReview';
 export default function TourReviews() {
   const { currentTour } = useTour();
   return (
-    <section className='natours-gradient flex flex-col items-center space-y-5 overflow-hidden'>
+    <section className='natours-gradient flex flex-col items-center justify-center space-y-5 overflow-hidden'>
       <div className='mt-8 flex flex-col items-center'>
         <p className='text-2xl font-semibold text-white/80'>User Reviews!</p>
         <p className='text-2xl font-semibold text-white'>

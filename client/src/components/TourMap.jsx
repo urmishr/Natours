@@ -87,7 +87,7 @@ export default function TourMap() {
           className='maplibregl-theme-modern'
           minZoom={2}
           initialZoom={isSingleLocation ? 10 : 8} // Adjust zoom for single location
-          scrollZoom={true}
+          scrollZoom={false}
           initialAttributionControl={false}
           mapStyle='/mapStyle/light.json'
           initialBounds={!isSingleLocation ? boundingBox : undefined} // Use bounds only if not a single location

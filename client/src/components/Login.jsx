@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthProvider';
 import Loader from './Loader';
 import toast from 'react-hot-toast';
 import validator from 'validator';
+import { motion } from 'motion/react';
 export default function Login() {
   const { loading, login, isAuthenticated } = useAuth();
   const [emailError, setEmailError] = useState(false);
@@ -53,7 +54,12 @@ export default function Login() {
   }, [isAuthenticated, loading, navigate]);
   return (
     <section className='my-auto flex w-full flex-col md:items-center'>
-      <div className='mx-5 my-14 flex flex-col justify-between space-y-8 rounded-lg bg-white px-5 py-7 shadow-lg md:min-w-[600px] md:p-13 md:shadow-xl'>
+      <motion.div
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: 50 }}
+        className='mx-5 my-14 flex flex-col justify-between space-y-8 rounded-lg bg-white px-5 py-7 shadow-lg md:min-w-[600px] md:p-13 md:shadow-xl'
+      >
         <div className='flex flex-col space-y-1'>
           <h1 className='natours-gradient-text text-2xl font-bold'>
             Log into Your account
@@ -109,15 +115,17 @@ export default function Login() {
           </NavLink>
         </div>
         <div>
-          <button
+          <motion.button
+            whileTap={{ scale: 0.8 }}
+            transition={{ type: 'keyframes', duration: 0.01 }}
             className='btn-primary w-1/2 py-3 md:w-1/3'
             onClick={handleLogin}
             disabled={loading}
           >
             {loading ? <Loader /> : 'Login'}
-          </button>
+          </motion.button>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthProvider';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import Loader from './Loader';
-import { IoArrowBackCircle } from 'react-icons/io5';
+import { motion } from 'motion/react';
 
 export default function ChangePassword() {
   const { error, loading, resetPassword, resetError } = useAuth();
@@ -14,7 +14,7 @@ export default function ChangePassword() {
   const location = useLocation();
   const { emailTyped } = location.state || '';
   const navigate = useNavigate();
-  const test = true;
+
   useEffect(
     function () {
       resetError();
@@ -64,7 +64,12 @@ export default function ChangePassword() {
   }
   return (
     <section className='my-auto flex w-full flex-col md:items-center'>
-      <div className='mx-5 my-14 flex flex-col justify-between space-y-8 rounded-lg bg-white px-5 py-7 shadow-lg md:min-w-[600px] md:p-13 md:shadow-xl'>
+      <motion.div
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: 50 }}
+        className='mx-5 my-14 flex flex-col justify-between space-y-8 rounded-lg bg-white px-5 py-7 shadow-lg md:min-w-[600px] md:p-13 md:shadow-xl'
+      >
         <div className='flex items-center gap-3 space-y-1'>
           <h1 className='natours-gradient-text text-2xl font-bold'>
             Change your password
@@ -108,15 +113,25 @@ export default function ChangePassword() {
 
         <p className='font-semibold text-red-400'>{error}</p>
 
-        <div>
-          <button
-            className='btn-primary min-w-1/2 px-4 py-3 md:w-1/3'
+        <div className='flex gap-3'>
+          <motion.button
+            whileTap={{ scale: 0.8 }}
+            transition={{ type: 'keyframes', duration: 0.01 }}
+            className='btn-primary w-1/2 px-4 py-3 text-xl'
             onClick={handleChangePassword}
           >
-            {loading ? <Loader /> : 'Change Password'}
-          </button>
+            {loading ? <Loader /> : 'Save'}
+          </motion.button>
+          <motion.button
+            whileTap={{ scale: 0.8 }}
+            transition={{ type: 'keyframes', duration: 0.01 }}
+            className='border-natours w-1/2 rounded-full border-3 font-bold text-stone-800'
+            onClick={() => navigate('/login')}
+          >
+            cancel
+          </motion.button>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
