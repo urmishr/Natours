@@ -8,7 +8,7 @@ import Loader from './Loader';
 import { motion } from 'motion/react';
 
 export default function ForgotPassword() {
-  const { loading, sendOtp, error, resetError } = useAuth();
+  const { loading, sendOtp, error, resetError, isAuthenticated } = useAuth();
   const location = useLocation();
   const { emailTyped } = location.state || '';
   const [emailError, setEmailError] = useState(false);
@@ -18,6 +18,7 @@ export default function ForgotPassword() {
 
   useEffect(
     function () {
+      if (isAuthenticated) return navigate('/account');
       resetError();
       if (emailTyped) setEmail(emailTyped.trim());
     },

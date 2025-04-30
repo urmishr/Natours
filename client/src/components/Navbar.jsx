@@ -73,6 +73,7 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen ? (
           <motion.div
+            key={'navbar'}
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -30 }}

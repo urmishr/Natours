@@ -16,7 +16,7 @@ export default function Tour({ tour }) {
       <div className='max-w-[388px] overflow-clip rounded bg-white shadow-lg'>
         <div className='relative'>
           <div className='img-clip'>
-            <div className='bg-natours/40 absolute h-full w-full'></div>
+            <div className='bg-natours/30 absolute h-full w-full'></div>
             <img
               src={`/img/tours/${tour.imageCover}`}
               // src={scenicImage}

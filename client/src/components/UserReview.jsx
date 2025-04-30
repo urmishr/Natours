@@ -2,7 +2,7 @@ import { Rating } from 'react-simple-star-rating';
 
 export default function UserReview({ photo, userName, review, ratings }) {
   return (
-    <div className='flex min-h-[300px] min-w-[350px] flex-col items-center justify-between space-y-10 rounded bg-white p-10 shadow-lg'>
+    <div className='flex min-h-[300px] min-w-[350px] flex-col items-center justify-between space-y-10 rounded bg-white p-10 shadow-lg md:max-w-[350px]'>
       <div className='space-y-5'>
         <div className='flex items-center gap-5'>
           <img

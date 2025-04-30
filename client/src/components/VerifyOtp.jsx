@@ -10,7 +10,7 @@ import { motion } from 'motion/react';
 
 export default function VerifyOtp() {
   const [otp, setOtp] = useState('');
-  const { error, loading, verifyOtp, resetError } = useAuth();
+  const { error, loading, verifyOtp, resetError, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const { emailTyped } = location.state || '';
@@ -18,6 +18,7 @@ export default function VerifyOtp() {
 
   useEffect(
     function () {
+      if (isAuthenticated) return navigate('/account');
       resetError();
       if (!emailTyped) {
         return navigate('/forgot-password/send-otp');

@@ -17,11 +17,19 @@ const bookingRoutes = require('./routes/bookingRoutes');
 const AppError = require('./utils/appErrors');
 const errorHandler = require('./controller/errorController');
 const viewRouter = require('./routes/viewRoutes');
+const bodyParser = require('body-parser');
+const bookingController = require('./controller/bookingController');
+
 const app = express();
 
-app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'client/dist')));
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.post(
+    '/checkout',
+    bodyParser.raw({ type: 'application/json' }),
+    bookingController.webhookCheckout,
+);
 
 // Middlewares
 //cors
@@ -44,6 +52,8 @@ app.use(
                 "'self'",
                 'Data:',
 
+                'http://localhost:8080',
+                'http://localhost:8080/favicon.ico',
                 'https://tile.openstreetmap.org',
                 'https://unpkg.com',
                 'https://tile.jawg.io/',
@@ -114,6 +124,9 @@ app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/dist', 'index.html'));
+});
 //Global app error handler
 app.use(errorHandler.errorController);
 // console.log('Current Env: ' + process.env.NODE_ENV);

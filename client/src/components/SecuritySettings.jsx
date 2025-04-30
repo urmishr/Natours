@@ -74,9 +74,9 @@ export default function SecuritySettings() {
   return (
     <form className='w-full md:w-3/4 lg:w-1/2' onSubmit={handleChangePassword}>
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: 50 }}
         className='my-7 flex flex-col justify-between space-y-8 rounded-lg bg-white px-6 py-7 shadow-lg md:min-w-[600px] md:p-13 md:shadow-xl'
       >
         <div className='flex flex-col space-y-1'>

@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from './page/HomePage';
 import Login from './components/Login';
 import Signup from './components/Signup';
+
 import AppLayout from './page/AppLayout';
 import Settings from './components/Settings';
 import Account from './page/Account';
@@ -25,6 +26,7 @@ function App() {
           <Routes>
             <Route path='/' element={<AppLayout />}>
               <Route index element={<HomePage />} />
+
               <Route path='login' element={<Login />} />
               <Route path='forgot-password'>
                 <Route index path='send-otp' element={<SendOtp />} />

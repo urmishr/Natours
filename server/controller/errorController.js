@@ -1,18 +1,11 @@
 const AppError = require('./../utils/appErrors');
 const sendErrorDev = (err, req, res) => {
-    if (req.originalUrl.startsWith('/api')) {
-        res.status(err.statusCode).json({
-            status: err.status,
-            message: err.message,
-            stack: err.stack,
-            error: err,
-        });
-    } else {
-        res.status(err.statusCode).render('error', {
-            title: 'Something went wrong',
-            msg: err.message,
-        });
-    }
+    res.status(err.statusCode).json({
+        status: err.status,
+        message: err.message,
+        stack: err.stack,
+        error: err,
+    });
 };
 
 const sendErrorProd = (err, req, res) => {
@@ -32,9 +25,9 @@ const sendErrorProd = (err, req, res) => {
         }
     } else {
         if (err.isOperational) {
-            res.status(err.statusCode).render('error', {
-                title: 'Something went wrong',
-                msg: err.message,
+            res.status(500).json({
+                status: 'Error',
+                message: err.message,
             });
         } else {
             console.error('Error 💥', err);

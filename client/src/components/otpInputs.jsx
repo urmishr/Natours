@@ -62,7 +62,7 @@ const OtpInput = ({ length, onOtpSubmit }) => {
           onChange={(e) => handleChange(e, i)}
           onKeyDown={(e) => handleKeyDown(e, i)}
           onClick={() => handleClick(i)}
-          type='tel'
+          type='text'
           maxLength='1' // Restrict input to a single character
           className='border-natours focus:ring-natours h-10 w-10 rounded bg-stone-200/70 text-center font-bold text-stone-700 outline-none focus:ring-3 md:h-14 md:w-14'
         />
