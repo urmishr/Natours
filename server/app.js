@@ -9,11 +9,12 @@ const hpp = require('hpp');
 const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+const cors = require('cors');
 
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
-const bookingRoutes = require('./routes/bookingRoutes');
+
 const AppError = require('./utils/appErrors');
 const errorHandler = require('./controller/errorController');
 const viewRouter = require('./routes/viewRoutes');
@@ -33,6 +34,16 @@ app.post(
     '/checkout',
     bodyParser.raw({ type: 'application/json' }),
     bookingController.webhookCheckout,
+);
+
+app.use(
+    cors({
+        origin: [
+            'nimble-malasada-478324.netlify.app',
+            'https://natours-aos3.onrender.com',
+        ],
+        credentials: true,
+    }),
 );
 
 // Middlewares
@@ -107,12 +118,12 @@ const limiter = rateLimit({
     message: 'Too many requests from this ip! rate limit exceeded',
 });
 
-// app.use('/api', limiter);
+app.use('/api', limiter);
 
 //used for logging details and adding current request time
 app.use((req, res, next) => {
     req.reqestTime = new Date().toISOString();
-    // console.log(req.headers)
+
     next();
 });
 
@@ -121,7 +132,7 @@ app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
-app.use('/api/v1/bookings', bookingRoutes);
+// app.use('/api/v1/bookings', bookingRoutes);
 
 //global route not found error handler
 app.all('*', (req, res, next) => {
@@ -133,6 +144,5 @@ app.get('*', (req, res) => {
 });
 //Global app error handler
 app.use(errorHandler.errorController);
-// console.log('Current Env: ' + process.env.NODE_ENV);
 
 module.exports = app;
