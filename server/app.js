@@ -22,7 +22,7 @@ const bookingRoutes = require('./routes/bookingRoutes');
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use(express.static(path.join(__dirname, './client/dist')));
 
 // Set view engine to Pug
 app.set('view engine', 'pug');
@@ -130,7 +130,7 @@ app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/bookings', bookingRoutes);
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+    res.sendFile(path.join(__dirname, './client/dist', 'index.html'));
 });
 
 //global route not found error handler
