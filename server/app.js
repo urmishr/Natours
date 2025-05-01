@@ -17,23 +17,19 @@ const reviewRouter = require('./routes/reviewRoutes');
 
 const AppError = require('./utils/appErrors');
 const errorHandler = require('./controller/errorController');
-const viewRouter = require('./routes/viewRoutes');
-const bodyParser = require('body-parser');
-const bookingController = require('./controller/bookingController');
+const bookingRoutes = require('./routes/bookingRoutes');
 
 const app = express();
-
+app.post(
+    '/webhook',
+    express.raw({ type: 'application/json' }),
+    require('./controller/bookingController').webhookCheckout,
+);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Set view engine to Pug
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
-
-app.post(
-    '/webhook',
-    bodyParser.raw({ type: 'application/json' }),
-    bookingController.webhookCheckout,
-);
 
 app.use(
     cors({
@@ -131,7 +127,7 @@ app.use((req, res, next) => {
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
-// app.use('/api/v1/bookings', bookingRoutes);
+app.use('/api/v1/bookings', bookingRoutes);
 
 //global route not found error handler
 app.all('*', (req, res, next) => {

@@ -15,7 +15,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         mode: 'payment',
-        success_url: `${DOMAIN}/tour/${tour.slug}`,
+        success_url: `${DOMAIN}/account/my-bookings`,
         cancel_url: `${DOMAIN}/tour/${tour.slug}`,
         customer_email: req.user.email,
         client_reference_id: req.params.tourId,
@@ -48,11 +48,13 @@ exports.webhookCheckout = async (req, res) => {
     let event;
 
     try {
+        console.log('Raw Body:', req.body);
         event = stripe.webhooks.constructEvent(
-            req.rawBody, // raw body buffer, see note below
+            req.body, // raw body buffer, see note below
             sig,
             process.env.STRIPE_WEBHOOK_SECRET,
         );
+        console.log('event', event);
     } catch (err) {
         console.log('Webhook signature verification failed.', err.message);
         return res.status(400).send(`Webhook Error: ${err.message}`);

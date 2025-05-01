@@ -51,7 +51,7 @@ function AuthProvier({ children }) {
     try {
       dispatch({ type: 'loading', payload: true });
       dispatch({ type: 'resetError' });
-      const res = await axios({
+      await axios({
         method: 'POST',
         url: 'https://natours-production-23d3.up.railway.app/api/v1/users/login',
         data: { email, password },
@@ -94,7 +94,7 @@ function AuthProvier({ children }) {
       dispatch({ type: 'loading', payload: true });
       dispatch({ type: 'resetError' });
 
-      const res = await axios.post(
+      await axios.post(
         'https://natours-production-23d3.up.railway.app/api/v1/users/signup',
         formdata,
         {
@@ -158,7 +158,7 @@ function AuthProvier({ children }) {
       dispatch({ type: 'loading', payload: true });
       dispatch({ type: 'resetError' });
 
-      const res = await axios.post(
+      await axios.post(
         'https://natours-production-23d3.up.railway.app/api/v1/users/forgot-password/send-otp',
         {
           email,
@@ -224,7 +224,7 @@ function AuthProvier({ children }) {
       dispatch({ type: 'loading', payload: true });
       dispatch({ type: 'resetError' });
 
-      const res = await axios({
+      await axios({
         method: 'PATCH',
         url: 'https://natours-production-23d3.up.railway.app/api/v1/users/update-me',
         data: formData,
