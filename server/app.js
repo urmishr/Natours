@@ -30,7 +30,7 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 app.post(
-    '/checkout',
+    '/webhook',
     bodyParser.raw({ type: 'application/json' }),
     bookingController.webhookCheckout,
 );
