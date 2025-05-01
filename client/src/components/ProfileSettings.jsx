@@ -20,7 +20,7 @@ export default function ProfileSettings() {
     function () {
       setName(user.name);
       setEmail(user.email);
-      const url = `https://natours-aos3.onrender.com/img/users/${user.photo}`;
+      const url = `https://natours-production-23d3.up.railway.app/img/users/${user.photo}`;
       setPreview(url);
     },
     [user],
@@ -157,7 +157,7 @@ export default function ProfileSettings() {
                   src={
                     preview
                       ? preview
-                      : `https://natours-aos3.onrender.com/img/users/${user.photo}`
+                      : `https://natours-production-23d3.up.railway.app/img/users/${user.photo}`
                   }
                   alt='Profile Preview'
                   className='h-full w-full rounded-full object-cover'

@@ -53,7 +53,7 @@ function AuthProvier({ children }) {
       dispatch({ type: 'resetError' });
       const res = await axios({
         method: 'POST',
-        url: 'https://natours-aos3.onrender.com/api/v1/users/login',
+        url: 'https://natours-production-23d3.up.railway.app/api/v1/users/login',
         data: { email, password },
         withCredentials: true,
       });
@@ -70,7 +70,7 @@ function AuthProvier({ children }) {
   async function loadUser() {
     try {
       const res = await axios(
-        'https://natours-aos3.onrender.com/api/v1/users/me',
+        'https://natours-production-23d3.up.railway.app/api/v1/users/me',
         { withCredentials: true },
       );
       dispatch({ type: 'resetError' });
@@ -95,7 +95,7 @@ function AuthProvier({ children }) {
       dispatch({ type: 'resetError' });
 
       const res = await axios.post(
-        'https://natours-aos3.onrender.com/api/v1/users/signup',
+        'https://natours-production-23d3.up.railway.app/api/v1/users/signup',
         formdata,
         {
           headers: {
@@ -120,7 +120,9 @@ function AuthProvier({ children }) {
       dispatch({ type: 'loading', payload: true });
       dispatch({ type: 'resetError' });
 
-      await axios('https://natours-aos3.onrender.com/api/v1/users/logout');
+      await axios(
+        'https://natours-production-23d3.up.railway.app/api/v1/users/logout',
+      );
 
       dispatch({ type: 'logout' });
       localStorage.removeItem('currentUser');
@@ -138,7 +140,7 @@ function AuthProvier({ children }) {
 
       await axios({
         method: 'PATCH',
-        url: 'https://natours-aos3.onrender.com/api/v1/users/update-password',
+        url: 'https://natours-production-23d3.up.railway.app/api/v1/users/update-password',
         data: { currentPassword, newPassword, confirmPassword },
       });
       toast.success('Password Changed Successfully!');
@@ -157,7 +159,7 @@ function AuthProvier({ children }) {
       dispatch({ type: 'resetError' });
 
       const res = await axios.post(
-        'https://natours-aos3.onrender.com/api/v1/users/forgot-password/send-otp',
+        'https://natours-production-23d3.up.railway.app/api/v1/users/forgot-password/send-otp',
         {
           email,
         },
@@ -179,7 +181,7 @@ function AuthProvier({ children }) {
       dispatch({ type: 'loading', payload: true });
       dispatch({ type: 'resetError' });
       const res = await axios.post(
-        'https://natours-aos3.onrender.com/api/v1/users/forgot-password/verify-otp',
+        'https://natours-production-23d3.up.railway.app/api/v1/users/forgot-password/verify-otp',
         {
           otp,
           email,
@@ -201,7 +203,7 @@ function AuthProvier({ children }) {
       dispatch({ type: 'resetError' });
 
       const res = await axios.patch(
-        'https://natours-aos3.onrender.com/api/v1/users/reset-password',
+        'https://natours-production-23d3.up.railway.app/api/v1/users/reset-password',
         {
           email,
           newPassword,
@@ -224,7 +226,7 @@ function AuthProvier({ children }) {
 
       const res = await axios({
         method: 'PATCH',
-        url: 'https://natours-aos3.onrender.com/api/v1/users/update-me',
+        url: 'https://natours-production-23d3.up.railway.app/api/v1/users/update-me',
         data: formData,
         headers: {
           'Content-Type': 'multipart/form-data',

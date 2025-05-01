@@ -23,7 +23,6 @@ const bookingController = require('./controller/bookingController');
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, 'client/dist')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Set view engine to Pug
@@ -139,9 +138,6 @@ app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client/dist', 'index.html'));
-});
 //Global app error handler
 app.use(errorHandler.errorController);
 

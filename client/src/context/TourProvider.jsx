@@ -40,7 +40,7 @@ function TourProvider({ children }) {
     try {
       dispatch({ type: 'loading', payload: true });
       const res = await axios.get(
-        'https://natours-aos3.onrender.com/api/v1/tours',
+        'https://natours-production-23d3.up.railway.app/api/v1/tours',
       );
       dispatch({ type: 'loadTours', payload: res.data.data.docs });
     } catch (error) {
@@ -54,7 +54,7 @@ function TourProvider({ children }) {
     try {
       dispatch({ type: 'loading', payload: true });
       const res = await axios.get(
-        `https://natours-aos3.onrender.com/api/v1/tours/tour/${slug}`,
+        `https://natours-production-23d3.up.railway.app/api/v1/tours/tour/${slug}`,
       );
       dispatch({ type: 'setCurrentTour', payload: res.data.data });
     } catch (error) {

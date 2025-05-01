@@ -7,7 +7,11 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     host: true, // Allows access from the network
-    port: 3000, // You can specify any port you want
+    port: 3000,
+    allowedHosts: [
+      '0149-116-74-93-138.ngrok-free.app',
+      'certainly-intimate-terrier.ngrok-free.app',
+    ], // You can specify any port you want
     proxy: {
       '/api': {
         target: 'http://localhost:8080',

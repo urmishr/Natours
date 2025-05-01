@@ -18,7 +18,7 @@ export default function Tour({ tour }) {
           <div className='img-clip'>
             <div className='bg-natours/30 absolute h-full w-full'></div>
             <img
-              src={`https://natours-aos3.onrender.com/img/tours/${tour.imageCover}`}
+              src={`https://natours-production-23d3.up.railway.app/img/tours/${tour.imageCover}`}
               // src={scenicImage}
               alt='scenic image'
               className='min-h-[250px] min-w-[350px]'
