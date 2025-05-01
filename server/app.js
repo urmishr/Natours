@@ -38,8 +38,8 @@ app.post(
 app.use(
     cors({
         origin: [
-            'https://statuesque-belekoy-f6fe44.netlify.app',
-            'https://natours-aos3.onrender.com',
+            'https://natours-production-23d3.up.railway.app',
+            'https://natours.urmish.site',
         ],
         credentials: true,
     }),
@@ -127,7 +127,7 @@ app.use((req, res, next) => {
 });
 
 //Route handleres
-app.use('/', viewRouter);
+// app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);

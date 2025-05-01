@@ -32,8 +32,8 @@ const sendErrorProd = (err, req, res) => {
         } else {
             console.error('Error 💥', err);
 
-            res.status(err.statusCode).render('error', {
-                title: 'Something went wrong',
+            res.status(err.statusCode).json({
+                status: 'Something went wrong',
                 msg: 'Please try again later',
             });
         }
