@@ -100,3 +100,21 @@ const multerFilter = (req, file, cb) => {
 };
 const upload = multer({ storage, fileFilter: multerFilter });
 exports.uploadUserPhoto = upload.single('photo');
+
+exports.filterUserFields = (req, res, next) => {
+    if (res.locals.data) {
+        // Remove sensitive fields from the response
+        const {
+            password,
+            passwordChangedAt,
+            __v,
+            otpVerified,
+            passwordResetOTPExpires,
+            passwordOtpSentAt,
+            otpSessionExpires,
+            ...filteredData
+        } = res.locals.data.toObject();
+        res.locals.data = filteredData;
+    }
+    next();
+};

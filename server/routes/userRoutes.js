@@ -20,9 +20,9 @@ route.patch('/reset-password', authController.resetPassword);
 route.use(authController.protect);
 route.get(
     '/me',
-
     userController.getMe,
     userController.getUser,
+    userController.filterUserFields, // Add this middleware to filter fields
 );
 route.patch(
     '/update-password',
