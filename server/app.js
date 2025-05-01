@@ -9,7 +9,6 @@ const hpp = require('hpp');
 const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
-const cors = require('cors');
 
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
@@ -131,7 +130,7 @@ app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/bookings', bookingRoutes);
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
 });
 
 //global route not found error handler
