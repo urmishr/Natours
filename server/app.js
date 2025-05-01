@@ -30,10 +30,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(
     cors({
-        origin: [
-            'https://natours-production-23d3.up.railway.app',
-            'https://natours.urmish.site',
-        ],
+        origin: ['https://natours.urmish.site'],
         credentials: true,
     }),
 );
