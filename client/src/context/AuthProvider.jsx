@@ -60,7 +60,8 @@ function AuthProvier({ children }) {
       await loadUser();
     } catch (e) {
       toast.error(e.response.data.message);
-      dispatch({ type: 'error', payload: error.response.data.message });
+      console.error(e);
+      dispatch({ type: 'error', payload: e.response.data.message });
       dispatch({ type: 'logout' });
     } finally {
       dispatch({ type: 'loading', payload: false });

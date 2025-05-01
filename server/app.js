@@ -14,17 +14,14 @@ const cors = require('cors');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const bookingController = require('./controller/bookingController');
 
 const AppError = require('./utils/appErrors');
 const errorHandler = require('./controller/errorController');
 const bookingRoutes = require('./routes/bookingRoutes');
 
 const app = express();
-app.post(
-    '/webhook',
-    express.raw({ type: 'application/json' }),
-    require('./controller/bookingController').webhookCheckout,
-);
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Set view engine to Pug
@@ -71,6 +68,12 @@ app.use(
             'frame-src': ['https://js.stripe.com/'],
         },
     }),
+);
+
+app.post(
+    '/webhook',
+    express.raw({ type: 'application/json' }),
+    bookingController.webhookCheckout,
 );
 
 //Body parser from requests

@@ -37,6 +37,7 @@ export default function BookTour() {
       toast.success('Purchase Completed');
     } catch (error) {
       toast.error('Something went wrong. Please try again later.');
+      console.error(error);
     } finally {
       setLoading(false);
     }
