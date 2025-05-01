@@ -26,7 +26,7 @@ export default function BookTour() {
       // Fetch the checkout session from the backend
       const stripe = await stripePromise;
       const session = await axios.get(
-        `https://natours-production-23d3.up.railway.app/api/v1/bookings/checkout-session/${currentTour._id}`,
+        `/api/v1/bookings/checkout-session/${currentTour._id}`,
         { headers: { 'X-Forwarded-Host': window.location.origin } },
       );
 

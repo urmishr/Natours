@@ -53,7 +53,7 @@ function AuthProvier({ children }) {
       dispatch({ type: 'resetError' });
       await axios({
         method: 'POST',
-        url: 'https://natours-production-23d3.up.railway.app/api/v1/users/login',
+        url: '/api/v1/users/login',
         data: { email, password },
         withCredentials: true,
       });
@@ -70,10 +70,7 @@ function AuthProvier({ children }) {
 
   async function loadUser() {
     try {
-      const res = await axios(
-        'https://natours-production-23d3.up.railway.app/api/v1/users/me',
-        { withCredentials: true },
-      );
+      const res = await axios('/api/v1/users/me', { withCredentials: true });
       dispatch({ type: 'resetError' });
 
       const user = {
@@ -95,16 +92,12 @@ function AuthProvier({ children }) {
       dispatch({ type: 'loading', payload: true });
       dispatch({ type: 'resetError' });
 
-      await axios.post(
-        'https://natours-production-23d3.up.railway.app/api/v1/users/signup',
-        formdata,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-          withCredentials: true,
+      await axios.post('/api/v1/users/signup', formdata, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
         },
-      );
+        withCredentials: true,
+      });
 
       toast.success('Signup successful!');
       await loadUser();
@@ -121,9 +114,7 @@ function AuthProvier({ children }) {
       dispatch({ type: 'loading', payload: true });
       dispatch({ type: 'resetError' });
 
-      await axios(
-        'https://natours-production-23d3.up.railway.app/api/v1/users/logout',
-      );
+      await axios('/api/v1/users/logout');
 
       dispatch({ type: 'logout' });
       localStorage.removeItem('currentUser');
@@ -141,7 +132,7 @@ function AuthProvier({ children }) {
 
       await axios({
         method: 'PATCH',
-        url: 'https://natours-production-23d3.up.railway.app/api/v1/users/update-password',
+        url: '/api/v1/users/update-password',
         data: { currentPassword, newPassword, confirmPassword },
       });
       toast.success('Password Changed Successfully!');
@@ -159,12 +150,9 @@ function AuthProvier({ children }) {
       dispatch({ type: 'loading', payload: true });
       dispatch({ type: 'resetError' });
 
-      await axios.post(
-        'https://natours-production-23d3.up.railway.app/api/v1/users/forgot-password/send-otp',
-        {
-          email,
-        },
-      );
+      await axios.post('/api/v1/users/forgot-password/send-otp', {
+        email,
+      });
       toast.success('Verification code has been sent to your Email', {
         duration: 4000,
       });
@@ -181,13 +169,10 @@ function AuthProvier({ children }) {
     try {
       dispatch({ type: 'loading', payload: true });
       dispatch({ type: 'resetError' });
-      const res = await axios.post(
-        'https://natours-production-23d3.up.railway.app/api/v1/users/forgot-password/verify-otp',
-        {
-          otp,
-          email,
-        },
-      );
+      const res = await axios.post('/api/v1/users/forgot-password/verify-otp', {
+        otp,
+        email,
+      });
       toast.success(res.data.message);
       return true;
     } catch (error) {
@@ -203,14 +188,11 @@ function AuthProvier({ children }) {
       dispatch({ type: 'loading', payload: true });
       dispatch({ type: 'resetError' });
 
-      const res = await axios.patch(
-        'https://natours-production-23d3.up.railway.app/api/v1/users/reset-password',
-        {
-          email,
-          newPassword,
-          confirmPassword,
-        },
-      );
+      const res = await axios.patch('/api/v1/users/reset-password', {
+        email,
+        newPassword,
+        confirmPassword,
+      });
       toast.success(res.data.message);
       return true;
     } catch (error) {
@@ -227,7 +209,7 @@ function AuthProvier({ children }) {
 
       await axios({
         method: 'PATCH',
-        url: 'https://natours-production-23d3.up.railway.app/api/v1/users/update-me',
+        url: '/api/v1/users/update-me',
         data: formData,
         headers: {
           'Content-Type': 'multipart/form-data',

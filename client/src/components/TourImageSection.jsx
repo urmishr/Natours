@@ -10,7 +10,7 @@ export default function TourImageSection() {
       <div className='relative z-2 md:h-[380px] lg:h-[470px]'>
         <div className='bg-natours/40 absolute h-full w-full'></div>
         <img
-          src={`https://natours-production-23d3.up.railway.app/img/tours/${currentTour.imageCover}`}
+          src={`/img/tours/${currentTour.imageCover}`}
           alt='scenic image'
           className='block h-full w-full object-cover'
         />

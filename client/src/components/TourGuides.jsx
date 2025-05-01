@@ -27,7 +27,7 @@ export default function TourGuides() {
         currentTour.guides.map((guide) => (
           <GuideAvatar
             key={guide._id}
-            photo={`https://natours-production-23d3.up.railway.app/img/users/${guide.photo}`}
+            photo={`/img/users/${guide.photo}`}
             guideName={guide.name}
             guideRole={formatGuideRole(guide.role)}
           />
