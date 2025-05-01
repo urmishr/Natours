@@ -23,17 +23,18 @@ const bookingRoutes = require('./routes/bookingRoutes');
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../client/dist')));
 
 // Set view engine to Pug
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use(
-    cors({
-        origin: ['https://natours.urmish.site'],
-        credentials: true,
-    }),
-);
+// app.use(
+//     cors({
+//         origin: ['https://natours.urmish.site'],
+//         credentials: true,
+//     }),
+// );
 
 // Middlewares
 //cors
@@ -128,6 +129,10 @@ app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/bookings', bookingRoutes);
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+});
 
 //global route not found error handler
 app.all('*', (req, res, next) => {
