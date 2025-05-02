@@ -28,6 +28,8 @@ app.use(express.static(path.join(__dirname, './client/dist')));
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
+app.set('trust proxy', 1);
+
 // app.use(
 //     cors({
 //         origin: ['https://natours.urmish.site'],
@@ -51,7 +53,11 @@ app.use(
                 '/login',
                 'https://js.stripe.com/',
             ],
-            'connect-src': ["'self'", 'ws://localhost:1234/'],
+            'connect-src': [
+                "'self'",
+                'ws://localhost:1234/',
+                ' https://tiles.openfreemap.org',
+            ],
             'img-src': [
                 "'self'",
                 'Data:',
