@@ -9,14 +9,11 @@ const Booking = require('../model/bookingModel');
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     const tour = await Tour.findById(req.params.tourId);
 
-    const DOMAIN =
-        req.headers['x-forwarded-host'] ||
-        `${req.protocol}://${req.get('host')}`;
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         mode: 'payment',
-        success_url: `${DOMAIN}/account/my-bookings`,
-        cancel_url: `${DOMAIN}/tour/${tour.slug}`,
+        success_url: `https://natours-production-23d3.up.railway.app/account/my-bookings`,
+        cancel_url: `https://natours-production-23d3.up.railway.app/tour/${tour.slug}`,
         customer_email: req.user.email,
         client_reference_id: req.params.tourId,
         line_items: [
