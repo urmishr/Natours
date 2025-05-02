@@ -86,7 +86,7 @@ const createBookingCheckout = async (session) => {
         return;
     }
 
-    const price = tour.price;
+    const { price } = tour;
 
     await Booking.create({
         tour: tourId,
@@ -94,16 +94,6 @@ const createBookingCheckout = async (session) => {
         price,
     });
 };
-
-// exports.createBookingCheckout = catchAsync(async (req, res, next) => {
-//     const { tour, user, price } = req.query;
-
-//     if (!tour && !user && !price) return next();
-
-//     await Booking.create({ tour, user, price });
-//     res.redirect(`${req.protocol}://${req.get('host')}/`);
-//     next();
-// });
 
 exports.getBookings = factory.getAll(Booking);
 exports.getBooking = factory.getOne(Booking);

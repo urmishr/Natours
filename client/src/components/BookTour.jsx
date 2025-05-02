@@ -27,7 +27,6 @@ export default function BookTour() {
       const stripe = await stripePromise;
       const session = await axios.get(
         `/api/v1/bookings/checkout-session/${currentTour._id}`,
-        { headers: { 'X-Forwarded-Host': window.location.origin } },
       );
 
       // Redirect to Stripe Checkout

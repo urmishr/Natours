@@ -30,15 +30,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.set('trust proxy', 1);
 
-// app.use(
-//     cors({
-//         origin: ['https://natours.urmish.site'],
-//         credentials: true,
-//     }),
-// );
-
 // Middlewares
-//cors
 
 // web secureity
 app.use(
@@ -69,6 +61,7 @@ app.use(
                 'https://tile.jawg.io/',
             ],
             'frame-src': ['https://js.stripe.com/'],
+            'worker-src': ["'self'", 'blob:'],
         },
     }),
 );
