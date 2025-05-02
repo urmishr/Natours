@@ -8,7 +8,7 @@ import Loader from './Loader';
 
 const stripePromise = loadStripe(
   'pk_test_51RGC81EDUE7FyaOzVQA0GjPNpiAihbVqW82AGrsxvNfNlweKRobsfx9yme635KBhoFNyqkrYY8E34tcQ5gUrjd1C00AH5ZWBCT',
-); // Replace with your Stripe publishable key
+);
 
 export default function BookTour() {
   const { currentTour } = useTour();

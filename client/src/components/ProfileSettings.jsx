@@ -18,6 +18,7 @@ export default function ProfileSettings() {
 
   useEffect(
     function () {
+      if (!user) return;
       setName(user.name);
       setEmail(user.email);
       const url = `/img/users/${user.photo}`;
@@ -77,10 +78,13 @@ export default function ProfileSettings() {
 
   useEffect(() => {
     // Check if any field has changed compared to the original user data
+    if (!user) return;
     const hasChanged =
       name !== user.name || email !== user.email || photo !== null;
     setIsChanged(hasChanged);
   }, [name, email, photo, user]);
+
+  if (loading) return <Loader color='green' />;
 
   return (
     <form className='w-full md:w-3/4 lg:w-1/2' onSubmit={handleProfileUpdate}>

@@ -1,12 +1,13 @@
 import { createContext, useContext, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-const AuthProvider = createContext();
+const AuthContext = createContext();
 const initialState = {
   currentUser: null,
   error: '',
   loading: false,
   isAuthenticated: false,
+  userInitialized: false, // New state to track initialization
 };
 
 function reducer(state, action) {
@@ -17,6 +18,7 @@ function reducer(state, action) {
         isAuthenticated: true,
         currentUser: action.payload,
         loading: false,
+        userInitialized: true, // Set to true after login
       };
 
     case 'error':
@@ -25,26 +27,45 @@ function reducer(state, action) {
       return { ...state, loading: action.payload };
 
     case 'logout':
-      return { ...state, currentUser: null, error: '', isAuthenticated: false };
+      return {
+        ...state,
+        currentUser: null,
+        error: '',
+        isAuthenticated: false,
+        userInitialized: true, // Set to true after logout
+      };
     case 'resetError':
       return { ...state, error: '' };
+
+    case 'initialize':
+      return {
+        ...state,
+        userInitialized: true, // Set to true after initialization
+      };
 
     default: {
       return new Error(`Error at ${action.type}`);
     }
   }
 }
-function AuthProvier({ children }) {
-  const [{ currentUser, error, loading, isAuthenticated }, dispatch] =
-    useReducer(reducer, initialState);
+function AuthProvider({ children }) {
+  const [
+    { currentUser, error, loading, isAuthenticated, userInitialized },
+    dispatch,
+  ] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('currentUser');
-    if (storedUser) {
-      dispatch({ type: 'login', payload: JSON.parse(storedUser) });
-    } else {
-      dispatch({ type: 'logout' });
+    async function initializeUser() {
+      dispatch({ type: 'loading', payload: true });
+      try {
+        await loadUser();
+      } catch {
+        dispatch({ type: 'logout' });
+      } finally {
+        dispatch({ type: 'initialize' }); // Mark initialization complete
+      }
     }
+    initializeUser();
   }, []);
 
   async function login(email, password) {
@@ -70,8 +91,15 @@ function AuthProvier({ children }) {
 
   async function loadUser() {
     try {
-      const res = await axios('/api/v1/users/me', { withCredentials: true });
+      dispatch({ type: 'loading', payload: true });
       dispatch({ type: 'resetError' });
+      const res = await axios('/api/v1/users/me', {
+        withCredentials: true,
+        headers: {
+          'Cache-Control': 'no-cache',
+          Pragma: 'no-cache',
+        },
+      });
 
       const user = {
         id: res.data.data.doc._id,
@@ -83,7 +111,10 @@ function AuthProvier({ children }) {
       dispatch({ type: 'login', payload: user });
       localStorage.setItem('currentUser', JSON.stringify(user));
     } catch (error) {
-      dispatch({ type: 'error', payload: error.response.data.message });
+      // dispatch({ type: 'error', payload: error.response.data.message });
+      console.error(error);
+    } finally {
+      dispatch({ type: 'loading', payload: false });
     }
   }
 
@@ -231,7 +262,7 @@ function AuthProvier({ children }) {
   }
 
   return (
-    <AuthProvider.Provider
+    <AuthContext.Provider
       value={{
         login,
         signup,
@@ -239,6 +270,7 @@ function AuthProvier({ children }) {
         changeProfile,
         sendOtp,
         verifyOtp,
+        loadUser,
         resetPassword,
         resetError,
         error,
@@ -246,18 +278,19 @@ function AuthProvier({ children }) {
         user: currentUser,
         logout,
         isAuthenticated,
+        userInitialized,
       }}
     >
       {children}
-    </AuthProvider.Provider>
+    </AuthContext.Provider>
   );
 }
 
 function useAuth() {
-  const context = useContext(AuthProvider);
+  const context = useContext(AuthContext);
   if (context === undefined)
     throw new Error('Auth context is used outside of the children');
   return context;
 }
 
-export { AuthProvier, useAuth };
+export { AuthProvider, useAuth };

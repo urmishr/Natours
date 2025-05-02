@@ -10,7 +10,7 @@ import MyBookings from './components/MyBookings';
 
 import TourOverview from './page/TourOverview';
 import AllTours from './page/AllTours';
-import { AuthProvier } from './context/AuthProvider';
+import { AuthProvider } from './context/AuthProvider';
 import PageNotFound from './page/PageNotFound';
 import ProtectedRoute from './components/ProtectedRoute';
 import { TourProvider } from './context/TourProvider';
@@ -20,7 +20,7 @@ import ChangePassword from './components/ChangePassword';
 
 function App() {
   return (
-    <AuthProvier>
+    <AuthProvider>
       <TourProvider>
         <BrowserRouter>
           <Routes>
@@ -67,7 +67,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </TourProvider>
-    </AuthProvier>
+    </AuthProvider>
   );
 }
 
