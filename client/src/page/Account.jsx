@@ -4,12 +4,12 @@ import { NavLink, Outlet } from 'react-router-dom';
 export default function Account() {
   return (
     <section className='flex flex-col items-center justify-center px-5 py-8'>
-      <div className='my-5 space-x-5 rounded bg-white p-6 shadow-md'>
+      <div className='my-5 space-x-3 rounded bg-white px-3 py-6 shadow-md md:space-x-5'>
         <NavLink
           to='/account'
           end
           className={({ isActive }) =>
-            `text-natours p-3 text-lg font-semibold ${isActive && 'natours-gradient rounded px-3 py-3 text-white shadow-md'} `
+            `text-natours p-3 font-semibold lg:text-lg ${isActive && 'natours-gradient rounded px-3 py-3 text-white shadow-md'} `
           }
         >
           Account Settings
@@ -18,7 +18,7 @@ export default function Account() {
           to='my-bookings'
           end
           className={({ isActive }) =>
-            `text-natours p-3 text-lg font-semibold ${isActive && 'natours-gradient rounded px-3 py-3 text-white shadow-md'} `
+            `text-natours p-3 text-lg font-semibold lg:text-lg ${isActive && 'natours-gradient rounded px-3 py-3 text-white shadow-md'} `
           }
         >
           My Bookings

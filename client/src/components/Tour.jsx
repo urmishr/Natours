@@ -21,7 +21,7 @@ export default function Tour({ tour }) {
               src={`/img/tours/${tour.imageCover}`}
               // src={scenicImage}
               alt='scenic image'
-              className='min-h-[250px] min-w-[350px]'
+              className='min-h-[250px] min-w-[300px]'
             />
           </div>
           <h3 className='absolute right-5 bottom-6'>
@@ -71,7 +71,7 @@ export default function Tour({ tour }) {
 
         {/* Pricing and details */}
 
-        <div className='flex w-full items-center border-t border-stone-600/30 bg-stone-400/10 p-8'>
+        <div className='flex w-full items-center border-t border-stone-600/30 bg-stone-400/10 p-6'>
           {/* pricings */}
           <div className='w-1/2 justify-baseline'>
             <p className='text-lg font-bold text-stone-600'>

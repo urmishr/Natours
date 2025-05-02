@@ -20,7 +20,11 @@ const errorHandler = require('./controller/errorController');
 const bookingRoutes = require('./routes/bookingRoutes');
 
 const app = express();
-
+app.post(
+    '/webhook',
+    express.raw({ type: 'application/json' }),
+    bookingController.webhookCheckout,
+);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, './client/dist')));
 
@@ -66,12 +70,6 @@ app.use(
     }),
 );
 
-app.post(
-    '/webhook',
-    express.raw({ type: 'application/json' }),
-    bookingController.webhookCheckout,
-);
-
 //Body parser from requests
 app.use(
     express.json({
@@ -112,7 +110,7 @@ const limiter = rateLimit({
     message: 'Too many requests from this ip! rate limit exceeded',
 });
 
-// app.use('/api', limiter);
+app.use('/api', limiter);
 
 //used for logging details and adding current request time
 app.use((req, res, next) => {
