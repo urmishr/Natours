@@ -20,7 +20,7 @@ module.exports = class Email {
         });
     }
 
-    async send(template, subject) {
+    async send(template, subject, data = {}) {
         //send actual mail
         const html = pug.renderFile(
             `${__dirname}/../views/email/${template}.pug`,
@@ -28,6 +28,7 @@ module.exports = class Email {
                 firstName: this.firstName,
                 otp: this.otp,
                 subject,
+                ...data,
             },
         );
 
@@ -55,6 +56,14 @@ module.exports = class Email {
         await this.send(
             'sendotp_template',
             'Your password reset OTP is valid for 10 mins!',
+        );
+    }
+
+    async sendBookingCompleted(bookingData) {
+        await this.send(
+            'booking-confirm',
+            'Your tour has been booked successfully ✅!',
+            bookingData,
         );
     }
 };

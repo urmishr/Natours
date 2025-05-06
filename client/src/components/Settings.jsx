@@ -3,7 +3,6 @@ import ProfileSettings from './ProfileSettings';
 import SecuritySettings from './SecuritySettings';
 import { MdOutlineSecurity } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
-import { Outlet } from 'react-router-dom';
 
 export default function Settings() {
   const [setting, setSetting] = useState('profile');

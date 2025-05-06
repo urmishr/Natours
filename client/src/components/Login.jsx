@@ -41,7 +41,8 @@ export default function Login() {
     return valid;
   }
 
-  async function handleLogin() {
+  async function handleLogin(e) {
+    e.preventDefault();
     if (validateFields(email.trim(), password.trim())) {
       await login(email.trim(), password.trim());
     }
@@ -54,78 +55,83 @@ export default function Login() {
   }, [isAuthenticated, loading, navigate]);
   return (
     <section className='my-auto flex w-full flex-col md:items-center'>
-      <motion.div
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: 50 }}
-        className='mx-5 my-14 flex flex-col justify-between space-y-8 rounded-lg bg-white px-5 py-7 shadow-lg md:min-w-[600px] md:p-13 md:shadow-xl'
-      >
-        <div className='flex flex-col space-y-1'>
-          <h1 className='natours-gradient-text text-2xl font-bold'>
-            Log into Your account
-          </h1>
-          <NavLink to='/signup' className='font-semibold text-stone-600'>
-            <span className='mr-2 text-stone-800/50'>
-              Don't have an Account?
-            </span>
-            Signup
-          </NavLink>
-        </div>
-        <div className='flex flex-col space-y-3'>
-          <div>
-            <label htmlFor='email' className='font-semibold text-stone-600'>
-              Email Address
-            </label>
+      <form>
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 50 }}
+          className='mx-5 my-14 flex flex-col justify-between space-y-8 rounded-lg bg-white px-5 py-7 shadow-lg md:min-w-[600px] md:p-13 md:shadow-xl'
+        >
+          <div className='flex flex-col space-y-1'>
+            <h1 className='natours-gradient-text text-2xl font-bold'>
+              Log into Your account
+            </h1>
+            <NavLink to='/signup' className='font-semibold text-stone-600'>
+              <span className='mr-2 text-stone-800/50'>
+                Don't have an Account?
+              </span>
+              Signup
+            </NavLink>
           </div>
-          <input
-            type='text'
-            className={`input-natours w-full text-stone-600 ${emailError ? 'border-3 border-red-400 focus:ring-0' : ''}`}
-            placeholder='you@example.com'
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              setEmailError(false);
-            }}
-          />
-        </div>
-        <div className='flex flex-col space-y-3'>
-          <div>
-            <label htmlFor='password' className='font-semibold text-stone-600'>
-              Password
-            </label>
+          <div className='flex flex-col space-y-3'>
+            <div>
+              <label htmlFor='email' className='font-semibold text-stone-600'>
+                Email Address
+              </label>
+            </div>
+            <input
+              type='text'
+              className={`input-natours w-full text-stone-600 ${emailError ? 'border-3 border-red-400 focus:ring-0' : ''}`}
+              placeholder='you@example.com'
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setEmailError(false);
+              }}
+            />
           </div>
-          <input
-            type='password'
-            className={`input-natours w-full text-stone-600 ${passwordError && 'border-3 border-red-400 focus:ring-0'}`}
-            placeholder='••••••••'
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setPasswordError(false);
-            }}
-          />
-        </div>
-        <div>
-          <NavLink
-            to='/forgot-password/send-otp'
-            className='text-natours font-semibold'
-            state={{ emailTyped: email }}
-          >
-            Forgot Password?
-          </NavLink>
-        </div>
-        <div>
-          <motion.button
-            whileTap={{ scale: 0.8 }}
-            transition={{ type: 'keyframes', duration: 0.01 }}
-            className='btn-primary w-1/2 py-3 md:w-1/3'
-            onClick={handleLogin}
-            disabled={loading}
-          >
-            {loading ? <Loader /> : 'Login'}
-          </motion.button>
-        </div>
-      </motion.div>
+          <div className='flex flex-col space-y-3'>
+            <div>
+              <label
+                htmlFor='password'
+                className='font-semibold text-stone-600'
+              >
+                Password
+              </label>
+            </div>
+            <input
+              type='password'
+              className={`input-natours w-full text-stone-600 ${passwordError && 'border-3 border-red-400 focus:ring-0'}`}
+              placeholder='••••••••'
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setPasswordError(false);
+              }}
+            />
+          </div>
+          <div>
+            <NavLink
+              to='/forgot-password/send-otp'
+              className='text-natours font-semibold'
+              state={{ emailTyped: email }}
+            >
+              Forgot Password?
+            </NavLink>
+          </div>
+          <div>
+            <motion.button
+              whileTap={{ scale: 0.8 }}
+              transition={{ type: 'keyframes', duration: 0.01 }}
+              className='btn-primary w-1/2 py-3 md:w-1/3'
+              onClick={handleLogin}
+              disabled={loading}
+            >
+              {loading ? <Loader /> : 'Login'}
+            </motion.button>
+          </div>
+        </motion.div>
+      </form>
     </section>
   );
 }

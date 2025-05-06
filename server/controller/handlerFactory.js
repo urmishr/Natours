@@ -39,7 +39,7 @@ exports.createOne = (Model) => {
 
         res.status(201).json({
             status: 'success',
-            data: { tour: doc },
+            data: { doc },
         });
     });
 };

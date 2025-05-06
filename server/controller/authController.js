@@ -24,7 +24,10 @@ const createSendToken = (res, user, statusCode, message = null) => {
         httpOnly: true,
     };
 
-    if (process.env.NODE_ENV === 'production') {
+    if (
+        process.env.NODE_ENV === 'production' &&
+        (res.req.secure || res.req.headers['x-forwarded-proto'] === 'https')
+    ) {
         cookieOptions.secure = true;
         cookieOptions.sameSite = 'none';
     }
@@ -73,6 +76,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
 exports.protect = catchAsync(async (req, res, next) => {
     //1. getting the token and check if it exist
+
     let token;
     if (
         req.headers.authorization &&
@@ -195,7 +199,7 @@ exports.sendOTP = catchAsync(async (req, res, next) => {
     if (process.env.NODE_ENV === 'production')
         await new Email(user, otp).sendPasswordResetOtp();
     await user.save({ validateBeforeSave: false });
-    console.log(otp);
+    if (process.env.NODE_ENV === 'development') console.log(otp);
 
     res.status(201).json({
         status: 'success',

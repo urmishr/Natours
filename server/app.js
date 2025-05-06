@@ -110,7 +110,7 @@ const limiter = rateLimit({
     message: 'Too many requests from this ip! rate limit exceeded',
 });
 
-app.use('/api', limiter);
+if (process.env.NODE_ENV === 'production') app.use('/api', limiter);
 
 //used for logging details and adding current request time
 app.use((req, res, next) => {

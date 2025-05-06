@@ -2,18 +2,29 @@ import { FaLocationArrow, FaMapPin, FaPeopleGroup } from 'react-icons/fa6';
 import { MdOutlineCalendarMonth } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import { motion } from 'motion/react';
+import { BsFillBagCheckFill } from 'react-icons/bs';
+import { useTour } from '../context/TourProvider';
 
 export default function Tour({ tour }) {
+  const { myBookings } = useTour();
+
+  const purchased = myBookings.find((booking) => booking.tour.id === tour.id);
   function capitalize(str) {
     if (!str) return '';
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
   return (
-    <section className='m-7 flex items-center justify-center'>
+    <section className='relative m-7 flex items-center justify-center'>
       {/* image section */}
 
-      <div className='max-w-[388px] overflow-clip rounded bg-white shadow-lg'>
+      <div className='relative max-w-[388px] overflow-clip rounded bg-white shadow-lg'>
+        {purchased && (
+          <div className='bg-natours/50 absolute top-2 right-2 z-40 flex items-center gap-3 rounded-full px-4 py-1.5 text-white backdrop-blur-sm lg:top-3 lg:right-3'>
+            <BsFillBagCheckFill />
+            <span className='hidden lg:block'>Purchased</span>
+          </div>
+        )}
         <div className='relative'>
           <div className='img-clip'>
             <div className='bg-natours/30 absolute h-full w-full'></div>
@@ -21,7 +32,7 @@ export default function Tour({ tour }) {
               src={`/img/tours/${tour.imageCover}`}
               // src={scenicImage}
               alt='scenic image'
-              className='min-h-[250px] min-w-[300px]'
+              className='min-h-[250px] min-w-[300px] object-cover'
             />
           </div>
           <h3 className='absolute right-5 bottom-6'>

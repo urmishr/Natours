@@ -1,51 +1,40 @@
-import { useEffect, useState } from 'react';
 import { IoIosArrowDroprightCircle } from 'react-icons/io';
-import axios from 'axios';
 import Loader from './Loader';
+import { useTour } from '../context/TourProvider';
+import { useNavigate } from 'react-router-dom';
 
 export default function MyBookings() {
-  // const { user } = useAuth();
-  const [myBookings, setMyBookings] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { myBookings, loading } = useTour();
+  const navigate = useNavigate();
+  function handleMore(slug) {
+    navigate(`/tour/${slug}`);
+  }
 
-  useEffect(function () {
-    async function getMyTours() {
-      try {
-        setLoading(true);
-        const res = await axios('/api/v1/bookings', { withCredential: true });
-        setMyBookings(res.data.data.docs);
-        console.log(res.data.data.docs);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    getMyTours();
-  }, []);
   return (
     <div className='flex w-full flex-col items-center justify-center'>
       {loading && <Loader color='green' className='mt-5 size-12' />}
       {myBookings.length > 0 && (
-        <p className='natours-gradient-text text-sm'>Your purchased Tours</p>
-      )}
-      {myBookings.length === 0 && (
-        <p className='natours-gradient-text text-sm font-semibold'>
-          No tour purchased yet!
+        <p className='natours-gradient-text text-[16px]'>
+          Your purchased Tours
         </p>
       )}
-      <ul className='mx-auto flex w-full flex-col'>
+      {myBookings.length === 0 && !loading && (
+        <p className='natours-gradient-text text-[16px] font-semibold'>
+          No tour purchased yet.
+        </p>
+      )}
+      <ul className='mx-auto flex w-full flex-col lg:mt-5 lg:grid lg:grid-cols-2 lg:gap-5'>
         {!loading &&
           [...myBookings].reverse().map((booking, i) => (
-            <li key={i} className='md:mx-auto md:w-1/2'>
-              <div className='my-3 flex w-full items-center justify-between gap-4 rounded bg-white p-5 shadow-sm'>
+            <li key={i} className='md:mx-auto md:w-1/2 lg:w-full'>
+              <div className='my-3 flex w-full items-center justify-between gap-4 rounded bg-white p-5 shadow-sm lg:my-2'>
                 <div className='flex items-center gap-4'>
                   <div className='flex size-6 items-center justify-center rounded-full bg-stone-200'>
                     <p className='text-sm font-semibold'>{i + 1}</p>
                   </div>
                   <div className='flex size-12 items-center'>
                     <img
-                      className='rounded object-cover shadow-sm'
+                      className='h-8 rounded shadow-sm'
                       src={`/img/tours/${booking.tour.imageCover}`}
                       alt={`${booking.tour.name}`}
                     />
@@ -57,8 +46,11 @@ export default function MyBookings() {
                     <p className='text-stone-800/50'>${booking.price}</p>
                   </div>
                 </div>
-                <div className='ml-3 flex items-center'>
-                  <button className='text-natours cursor-pointer rounded-full px-2 font-semibold'>
+                <div className='ml-3 flex flex-col items-center'>
+                  <button
+                    onClick={() => handleMore(booking.tour.slug)}
+                    className='text-natours cursor-pointer rounded-full px-2 font-semibold'
+                  >
                     <IoIosArrowDroprightCircle className='m-0 size-6' />
                   </button>
                 </div>

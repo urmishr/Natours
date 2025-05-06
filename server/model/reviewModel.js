@@ -42,7 +42,7 @@ reviewSchema.pre(/^find/, function (next) {
     // })
     this.populate({
         path: 'user',
-        select: 'name photo -_id',
+        select: 'name photo _id',
     });
     next();
 });

@@ -2,7 +2,7 @@ import { Rating } from 'react-simple-star-rating';
 
 export default function UserReview({ photo, userName, review, ratings }) {
   return (
-    <div className='mx-auto flex min-h-[300px] max-w-md min-w-[350px] flex-col items-center justify-between space-y-10 rounded bg-white p-8 shadow-lg'>
+    <div className='mx-auto flex min-h-[19rem] min-w-[20rem] flex-col items-center justify-between space-y-10 rounded bg-white p-8 shadow-lg md:min-h-[300px] md:max-w-[400px] md:min-w-[350px]'>
       <div className='space-y-5'>
         <div className='flex items-center gap-5'>
           <img
@@ -20,7 +20,6 @@ export default function UserReview({ photo, userName, review, ratings }) {
         <Rating
           initialValue={Math.round(ratings)}
           size={25}
-          className=''
           readonly={true}
           fillColor={'#55c57a'}
         />

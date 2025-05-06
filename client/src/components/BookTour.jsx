@@ -57,18 +57,21 @@ export default function BookTour() {
               .
               <br />
               Infinite memories. Make it yours today! <br />
+              <br />
               {!isAuthenticated && (
                 <span className='text-red-400'>Login to book this tour</span>
               )}
             </p>
           </div>
-          <button
-            className='btn-primary min-w-[200px] px-4 py-2 lg:py-4'
-            onClick={handleBookTour}
-            disabled={loading}
-          >
-            {loading ? <Loader /> : 'Book Yours Now!'}
-          </button>
+          {isAuthenticated && (
+            <button
+              className='btn-primary min-w-[200px] px-4 py-2 lg:py-4'
+              onClick={handleBookTour}
+              disabled={loading}
+            >
+              {loading ? <Loader /> : 'Book Yours Now!'}
+            </button>
+          )}
         </div>
       </div>
     </section>

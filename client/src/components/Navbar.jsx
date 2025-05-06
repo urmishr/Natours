@@ -71,7 +71,7 @@ export default function Navbar() {
         </div>
       </nav>
       <AnimatePresence>
-        {isOpen ? (
+        {isOpen && (
           <motion.div
             key={'navbar'}
             initial={{ opacity: 0, y: -30 }}
@@ -86,7 +86,7 @@ export default function Navbar() {
               </ul>
             </div>
             {user && (
-              <div className='flex items-end justify-center p-3'>
+              <div className={'flex items-end justify-center p-3'}>
                 <NavLink
                   to='/account'
                   className={({ isActive }) =>
@@ -102,7 +102,7 @@ export default function Navbar() {
               </div>
             )}
           </motion.div>
-        ) : null}
+        )}
       </AnimatePresence>
     </header>
   );

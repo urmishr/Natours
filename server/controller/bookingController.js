@@ -1,10 +1,12 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const Tour = require('../model/tourModel');
 const User = require('../model/userModel');
+const Email = require('../utils/mail');
 
 const catchAsync = require('../utils/catchAsync');
 const factory = require('../controller/handlerFactory');
 const Booking = require('../model/bookingModel');
+const AppError = require('../utils/appErrors');
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     const tour = await Tour.findById(req.params.tourId);
@@ -45,15 +47,12 @@ exports.webhookCheckout = async (req, res) => {
     let event;
 
     try {
-        console.log('Raw Body:', req.body);
         event = stripe.webhooks.constructEvent(
             req.body, // raw body buffer, see note below
             sig,
             process.env.STRIPE_WEBHOOK_SECRET,
         );
-        console.log('event', event);
     } catch (err) {
-        console.log('Webhook signature verification failed.', err.message);
         return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
@@ -87,6 +86,15 @@ const createBookingCheckout = async (session) => {
     }
 
     const { price } = tour;
+    const email = new Email(user, null);
+    const bookingData = {
+        tourName: tour.name,
+        tourImage: `/img/tours/${tour.imageCover}`,
+        price,
+        tourUrl: `https://natours.urmish.site/tour/${tour.slug}`,
+    };
+
+    await email.sendBookingCompleted(bookingData);
 
     await Booking.create({
         tour: tourId,
@@ -94,6 +102,23 @@ const createBookingCheckout = async (session) => {
         price,
     });
 };
+
+exports.getBookingByUserId = catchAsync(async (req, res, next) => {
+    const { _id } = req.user;
+
+    const bookings = await Booking.find({ user: _id });
+    if (!bookings)
+        return next(
+            new AppError('No bookings found! Please book a tour first'),
+        );
+
+    res.status(200).json({
+        status: 'success',
+        results: bookings.length,
+        message: `Booking found for user: ${_id}`,
+        bookings,
+    });
+});
 
 exports.getBookings = factory.getAll(Booking);
 exports.getBooking = factory.getOne(Booking);

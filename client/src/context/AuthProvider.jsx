@@ -56,17 +56,21 @@ function AuthProvider({ children }) {
 
   useEffect(() => {
     async function initializeUser() {
-      dispatch({ type: 'loading', payload: true });
-      try {
-        await loadUser();
-      } catch {
-        dispatch({ type: 'logout' });
-      } finally {
-        dispatch({ type: 'initialize' }); // Mark initialization complete
+      if (!userInitialized) {
+        // Prevent multiple calls
+        dispatch({ type: 'loading', payload: true });
+        try {
+          await loadUser();
+        } catch {
+          dispatch({ type: 'logout' });
+        } finally {
+          dispatch({ type: 'initialize' }); // Mark initialization complete
+          dispatch({ type: 'loading', payload: false });
+        }
       }
     }
     initializeUser();
-  }, []);
+  }, [userInitialized]); // Add dependency to ensure it runs only once
 
   async function login(email, password) {
     try {
@@ -95,10 +99,6 @@ function AuthProvider({ children }) {
       dispatch({ type: 'resetError' });
       const res = await axios('/api/v1/users/me', {
         withCredentials: true,
-        headers: {
-          'Cache-Control': 'no-cache',
-          Pragma: 'no-cache',
-        },
       });
 
       const user = {
@@ -149,6 +149,7 @@ function AuthProvider({ children }) {
 
       dispatch({ type: 'logout' });
       localStorage.removeItem('currentUser');
+      toast.success('Logged Out');
     } catch (error) {
       dispatch({ type: 'error', payload: error.response.data.message });
     } finally {

@@ -1,18 +1,11 @@
-import { useEffect } from 'react';
 import Loader from '../components/Loader';
 import Tour from '../components/Tour';
 import { useTour } from '../context/TourProvider';
 import { motion } from 'motion/react';
 
 export default function AllTours() {
-  const { loading, error, tours, getAllTours } = useTour();
+  const { loading, error, tours } = useTour();
 
-  useEffect(function () {
-    async function getTours() {
-      await getAllTours();
-    }
-    getTours();
-  }, []);
   return (
     <motion.div
       initial={{ opacity: 0 }}

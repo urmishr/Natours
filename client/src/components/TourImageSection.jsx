@@ -17,11 +17,11 @@ export default function TourImageSection() {
       </div>
       {/* tour title  */}
       <div className='absolute inset-0 z-4 flex flex-col items-center justify-center'>
-        <p>
-          <span className='natours-gradient-t px-3 py-2 text-3xl font-light text-white shadow-md lg:text-4xl'>
+        <div className='natours-gradient-t px-3 py-2 shadow-md'>
+          <span className='text-3xl font-light text-white lg:text-4xl'>
             {currentTour.name}
           </span>
-        </p>
+        </div>
         <div className='flex gap-2 p-5 lg:gap-5'>
           <p className='flex items-center gap-2 text-lg text-white'>
             <span>

@@ -11,18 +11,16 @@ import { useEffect } from 'react';
 
 export default function TourOverview() {
   const { slug } = useParams();
-  const { tours, currentTour, loading, getCurrentTour, getAllTours } =
-    useTour();
+  const {
+    currentTour,
+    loading,
+    getCurrentTour,
+
+    myBookings,
+  } = useTour();
 
   useEffect(() => {
     async function fetchData() {
-      // If tours are not loaded yet, load them
-      if (!tours.length) {
-        await getAllTours();
-      }
-
-      // Find the tour with the matching slug
-
       await getCurrentTour(slug);
     }
 
@@ -36,7 +34,7 @@ export default function TourOverview() {
   ) : Object.keys(currentTour).length === 0 ? (
     <div className='flex h-[calc(100vh-10vh)] flex-col items-center justify-center gap-3'>
       <Loader className='size-12' color='green' />
-      <p className='text-stone-600 md:text-xl'>Loading Tour. . .</p>
+      <p className='text-stone-600 md:text-xl'>Loading Tour . . .</p>
     </div>
   ) : (
     <>
@@ -45,7 +43,12 @@ export default function TourOverview() {
       <TourImages />
       <TourMap />
       <TourReviews />
-      <BookTour />
+
+      <div>
+        {!myBookings.find(
+          (booking) => currentTour._id === booking.tour._id,
+        ) && <BookTour />}
+      </div>
     </>
   );
 }

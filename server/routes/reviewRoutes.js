@@ -5,6 +5,11 @@ const authController = require('./../controller/authController');
 const router = express.Router({ mergeParams: true });
 
 router.use(authController.protect);
+router.get(
+    '/user',
+    authController.restrictTo('user', 'admin'),
+    reviewController.getReviewByUserId,
+);
 
 router
     .route('/')
@@ -12,6 +17,7 @@ router
     .post(
         authController.restrictTo('user'),
         reviewController.setTourAndUserId,
+        reviewController.checkReviewConditions,
         reviewController.createReview,
     );
 
