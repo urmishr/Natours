@@ -1,6 +1,6 @@
 // const AppError = require('./../utils/appErrors');
 // const catchAsync = require('./../utils/catchAsync');
-const { result } = require('lodash-es');
+
 const Booking = require('../model/bookingModel');
 
 const AppError = require('../utils/appErrors');
