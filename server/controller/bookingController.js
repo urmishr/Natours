@@ -91,7 +91,7 @@ const createBookingCheckout = async (session) => {
         tourName: tour.name,
         tourImage: `/img/tours/${tour.imageCover}`,
         price,
-        tourUrl: `https://natours.urmish.site/tour/${tour.slug}`,
+        tourUrl: `https://natours.urmish.site/img/tours/${tour.slug}`,
     };
 
     await email.sendBookingCompleted(bookingData);
