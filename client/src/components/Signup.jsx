@@ -74,7 +74,7 @@ export default function Signup() {
     // Confirm Password: must match password
     if (!confirmPassword) {
       setConfirmPasswordError(true);
-      toast.error('Confirm Password id required');
+      toast.error('Confirm Password is required');
       valid = false;
     } else if (confirmPassword !== password) {
       setConfirmPasswordError(true);
