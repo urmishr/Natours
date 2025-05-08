@@ -1,14 +1,17 @@
 import { useParams } from 'react-router-dom';
 import BookTour from '../components/BookTour';
-import TourImages from '../components/TourImages';
 import TourImageSection from '../components/TourImageSection';
 import TourInformation from '../components/TourInformation';
-import TourMap from '../components/TourMap';
-import TourReviews from '../components/TourReviews';
+// import TourImages from '../components/TourImages';
+// import TourMap from '../components/TourMap';
+// import TourReviews from '../components/TourReviews';
 import { useTour } from '../context/TourProvider';
 import Loader from '../components/Loader';
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 
+const TourMap = lazy(() => import('../components/TourMap'));
+const TourImages = lazy(() => import('../components/TourImages'));
+const TourReviews = lazy(() => import('../components/TourReviews'));
 export default function TourOverview() {
   const { slug } = useParams();
   const {
@@ -40,9 +43,32 @@ export default function TourOverview() {
     <>
       <TourImageSection />
       <TourInformation />
-      <TourImages />
-      <TourMap />
-      <TourReviews />
+      <Suspense
+        fallback={
+          <Loader
+            color='green'
+            className='size-12'
+            type='componant'
+            text={`Tour Images`}
+          />
+        }
+      >
+        <TourImages />
+      </Suspense>
+      <Suspense
+        fallback={
+          <Loader
+            color='green'
+            className='size-12'
+            type='componant'
+            text={`Map and Review`}
+          />
+        }
+      >
+        <TourMap />
+
+        <TourReviews />
+      </Suspense>
 
       <div>
         {!myBookings.find(
