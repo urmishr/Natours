@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import BookTour from '../components/BookTour';
 import TourImageSection from '../components/TourImageSection';
 import TourInformation from '../components/TourInformation';
-// import TourImages from '../components/TourImages';
+import TourImages from '../components/TourImages';
 // import TourMap from '../components/TourMap';
 // import TourReviews from '../components/TourReviews';
 import { useTour } from '../context/TourProvider';
@@ -10,7 +10,7 @@ import Loader from '../components/Loader';
 import { lazy, Suspense, useEffect } from 'react';
 
 const TourMap = lazy(() => import('../components/TourMap'));
-const TourImages = lazy(() => import('../components/TourImages'));
+
 const TourReviews = lazy(() => import('../components/TourReviews'));
 export default function TourOverview() {
   const { slug } = useParams();
@@ -43,25 +43,16 @@ export default function TourOverview() {
     <>
       <TourImageSection />
       <TourInformation />
+
+      <TourImages />
+
       <Suspense
         fallback={
           <Loader
             color='green'
             className='size-12'
             type='componant'
-            text={`Tour Images`}
-          />
-        }
-      >
-        <TourImages />
-      </Suspense>
-      <Suspense
-        fallback={
-          <Loader
-            color='green'
-            className='size-12'
-            type='componant'
-            text={`Map and Review`}
+            text={`Map and Reviews`}
           />
         }
       >
