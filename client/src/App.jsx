@@ -1,17 +1,10 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-// import Login from './components/Login';
-// import Signup from './components/Signup';
-// import Settings from './components/Settings';
-// import Account from './page/Account';
-// import MyBookings from './components/MyBookings';
-// import TourOverview from './page/TourOverview';
-// import PageNotFound from './page/PageNotFound';
-// import AllTours from './page/AllTours';
-// import SendOtp from './components/SendOtp';
-// import VerifyOtp from './components/VerifyOtp';
-// import ChangePassword from './components/ChangePassword';
-// import MyReviews from './components/MyReviews';
+import Settings from './components/Settings';
+import Account from './page/Account';
+import MyReviews from './components/MyReviews';
+import MyBookings from './components/MyBookings';
+
 import ScrollToTop from './components/ScrollToTop';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthProvider';
@@ -22,12 +15,8 @@ import AppLayout from './page/AppLayout';
 import { lazy, Suspense } from 'react';
 import LoadingFullScreen from './components/LoadingFullScreen';
 
-const MyReviews = lazy(() => import('./components/MyReviews'));
 const Login = lazy(() => import('./components/Login'));
 const Signup = lazy(() => import('./components/Signup'));
-const Settings = lazy(() => import('./components/Settings'));
-const Account = lazy(() => import('./page/Account'));
-const MyBookings = lazy(() => import('./components/MyBookings'));
 const TourOverview = lazy(() => import('./page/TourOverview'));
 const PageNotFound = lazy(() => import('./page/PageNotFound'));
 const AllTours = lazy(() => import('./page/AllTours'));
