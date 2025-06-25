@@ -28,7 +28,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
                         name: `${tour.name} Tour`,
                         description: tour.summary,
                         images: [
-                            `https://natours-production-23d3.up.railway.app/img/tours/${tour.imageCover}`,
+                            `https://natours.urmish.site/img/tours/${tour.imageCover}`,
                         ],
                     },
                 },
